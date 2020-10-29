@@ -14,7 +14,7 @@
 //public class NettyHttpClient {
 //    public void connect(String host, int port) throws Exception {
 //        EventLoopGroup workerGroup = new NioEventLoopGroup();
-//        
+//
 //        try {
 //            Bootstrap b = new Bootstrap();
 //            b.group(workerGroup);
@@ -30,30 +30,20 @@
 //                    ch.pipeline().addLast(new HttpClientOutboundHandler());
 //                }
 //            });
-//            
+//
 //            // Start the client.
 //            ChannelFuture f = b.connect(host, port).sync();
-//            
-//           // for test
-//            URI uri = new URI("http://127.0.0.1:8844");
-//            String msg = "Are you ok?";
-//            DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET,
-//                    uri.toASCIIString(), Unpooled.wrappedBuffer(msg.getBytes("UTF-8")));
-//            
-//            // 构建http请求
-//            request.headers().set(HttpHeaders.Names.HOST, host);
-//            request.headers().set(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-//            request.headers().set(HttpHeaders.Names.CONTENT_LENGTH, request.content().readableBytes());
-//            // 发送http请求
+//
+//           
 //            f.channel().write(request);
 //            f.channel().flush();
 //            f.channel().closeFuture().sync();
 //        } finally {
 //            workerGroup.shutdownGracefully();
 //        }
-//        
+//
 //    }
-//    
+//
 //    public static void main(String[] args) throws Exception {
 //        NettyHttpClient client = new NettyHttpClient();
 //        client.connect("127.0.0.1", 8844);
