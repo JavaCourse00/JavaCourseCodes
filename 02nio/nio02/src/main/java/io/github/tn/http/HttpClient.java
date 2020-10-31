@@ -29,7 +29,7 @@ public class HttpClient {
     //server
     public static void main(String[] args) throws IOException {
         ExecutorService executorService = Executors.newFixedThreadPool(40);
-        final ServerSocket serverSocket = new ServerSocket(8803);
+        final ServerSocket serverSocket = new ServerSocket(1212);
         while (true) {
             try {
                 final Socket socket = serverSocket.accept();
