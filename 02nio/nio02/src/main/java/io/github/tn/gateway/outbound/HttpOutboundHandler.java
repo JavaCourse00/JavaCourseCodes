@@ -54,6 +54,7 @@ public class HttpOutboundHandler {
     }
 
 
+    // Response
     private void handleResponse(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, final HttpResponse endpointResponse) throws Exception {
         FullHttpResponse response = null;
         try {
@@ -81,6 +82,7 @@ public class HttpOutboundHandler {
 
     }
 
+    // 关流
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
         ctx.close();
