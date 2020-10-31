@@ -72,7 +72,7 @@ public class HttpClient {
         }catch (Exception e){
             System.err.println("接口调用失败");
         }
-        return null;
+        return "接口调用失败";
     }
 
 
