@@ -12,7 +12,7 @@ public class TNettyServerApplication {
     public final static String GATEWAY_NAME = "NIOGateway";
     //版本
     public final static String GATEWAY_VERSION = "1.0.0";
-    
+
     public static void main(String[] args) {
         String proxyServer = System.getProperty("proxyServer","http://localhost:8801/test");
         String proxyPort = System.getProperty("proxyPort","8888");

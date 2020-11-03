@@ -9,7 +9,7 @@ import io.netty.handler.codec.http.HttpServerCodec;
 public class HttpInboundInitializer extends ChannelInitializer<SocketChannel> {
 	
 	private String proxyServer;
-	
+
 	public HttpInboundInitializer(String proxyServer) {
 		this.proxyServer = proxyServer;
 	}
