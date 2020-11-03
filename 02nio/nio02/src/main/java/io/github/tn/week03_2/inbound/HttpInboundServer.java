@@ -1,4 +1,4 @@
-package io.github.tn.gateway.inbound;
+package io.github.tn.week03_2.inbound;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;

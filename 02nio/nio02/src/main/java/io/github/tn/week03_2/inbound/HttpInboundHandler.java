@@ -1,6 +1,6 @@
-package io.github.tn.gateway.inbound;
+package io.github.tn.week03_2.inbound;
 
-import io.github.tn.gateway.outbound.HttpOutboundHandler;
+import io.github.tn.week03_2.outbound.HttpOutboundHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;

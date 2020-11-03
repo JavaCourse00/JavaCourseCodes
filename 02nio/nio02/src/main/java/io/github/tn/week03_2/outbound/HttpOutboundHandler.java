@@ -1,4 +1,4 @@
-package io.github.tn.gateway.outbound;
+package io.github.tn.week03_2.outbound;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

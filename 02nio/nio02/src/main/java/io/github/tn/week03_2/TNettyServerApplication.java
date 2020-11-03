@@ -1,7 +1,7 @@
-package io.github.tn.gateway;
+package io.github.tn.week03_2;
 
 
-import io.github.tn.gateway.inbound.HttpInboundServer;
+import io.github.tn.week03_2.inbound.HttpInboundServer;
 
 /**
  * gateway 启动类

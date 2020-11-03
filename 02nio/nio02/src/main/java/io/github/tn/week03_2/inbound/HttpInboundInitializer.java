@@ -1,4 +1,4 @@
-package io.github.tn.gateway.inbound;
+package io.github.tn.week03_2.inbound;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

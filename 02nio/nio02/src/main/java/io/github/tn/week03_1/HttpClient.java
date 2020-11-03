@@ -1,4 +1,4 @@
-package io.github.tn.http;
+package io.github.tn.week03_1;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
