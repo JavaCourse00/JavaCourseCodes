@@ -23,12 +23,15 @@ public class CountDownLatchDemo2 {
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    //确保contDown， test() 报错不影响其他
                     countDownLatch.countDown();
                 }
             });
         }
         countDownLatch.await();
         System.out.println("==>所有程序员完成任务，项目顺利上线！");
+        // 关闭线程池中 当前使用的线程
+        // 必须写，可能会阻塞线程池中的线程，造成线程一直等待工作
         exec.shutdown();
     }
     
