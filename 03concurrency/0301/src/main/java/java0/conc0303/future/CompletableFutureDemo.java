@@ -17,14 +17,14 @@ public class CompletableFutureDemo {
         
         // 3.组合
         System.out.println("=====>3.组合");
-        String result3 = CompletableFuture.supplyAsync(()->{
+        String result3 = CompletableFuture.supplyAsync(()->{//supplyAsync可以支持返回值 ，runAsync方法不支持返回值。
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             return "Hello";
-        }).thenCombine(CompletableFuture.supplyAsync(()->{
+        }).thenCombine(CompletableFuture.supplyAsync(()->{// thenCombine合并任务
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -33,7 +33,9 @@ public class CompletableFutureDemo {
             return "world";
         }),(s1,s2)->{return s1 + " " + s2;}).join();
         System.out.println("thenCombine:"+result3);
-    
+
+        // 当一个线程依赖另一个线程时，可以使用 thenApply 方法来把这两个线程串行化
+        // thenAccept 消费处理结果  接收任务的处理结果，并消费处理，无返回结果。
         CompletableFuture.supplyAsync(() -> "Hello, java course.")
                 .thenApply(String::toUpperCase).thenCompose(s -> CompletableFuture.supplyAsync(s::toLowerCase)).thenAccept(v -> { System.out.println("thenCompose:"+v);});
         
