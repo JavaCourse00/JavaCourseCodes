@@ -6,12 +6,13 @@ public class CompletableFutureDemo {
     
     public static void main(String[] args){
         
-        // 1.变换结果
+        // 1.变换结果  - 返回结果
         System.out.println("=====>1.变换结果");
+        // lambada
         String result1 = CompletableFuture.supplyAsync(()->{return "Hello ";}).thenApplyAsync(v -> v + "world").join();
         System.out.println(result1);
     
-        // 2.消费
+        // 2.消费 - 不返回结果 内部直接答应结果
         CompletableFuture.supplyAsync(()->{return "Hello ";}).thenAccept(v -> { System.out.println("=====>2.消费");System.out.println("consumer: " + v);});
         
         // 3.组合
