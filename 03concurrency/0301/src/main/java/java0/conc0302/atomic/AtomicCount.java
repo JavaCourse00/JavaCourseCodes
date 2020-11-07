@@ -7,7 +7,7 @@ public class AtomicCount {
 
     private AtomicInteger num = new AtomicInteger();
 
-    public synchronized int add() {
+    public int add() {
         return num.getAndIncrement();
     }
 
