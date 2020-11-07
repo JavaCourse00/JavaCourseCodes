@@ -3,6 +3,7 @@ package java0.conc0303.future;
 import java.util.Random;
 import java.util.concurrent.*;
 
+//方法回调
 public class FutureDemo1 {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newCachedThreadPool();

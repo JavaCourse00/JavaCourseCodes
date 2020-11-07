@@ -2,7 +2,7 @@ package java0.conc0303.future;
 
 import java.util.Random;
 import java.util.concurrent.*;
-
+//线程回调
 public class FutureTask1 {
     public static void main(String[] args) {
         //第一种方式
