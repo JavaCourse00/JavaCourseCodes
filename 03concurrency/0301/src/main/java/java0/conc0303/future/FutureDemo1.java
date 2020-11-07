@@ -8,10 +8,15 @@ public class FutureDemo1 {
         ExecutorService executor = Executors.newCachedThreadPool();
         Future<Integer> result = executor.submit(new Callable<Integer>() {
             public Integer call() throws Exception {
-                return new Random().nextInt();
+//                return new Random().nextInt();
+                int numberInt = new Random().nextInt();
+                System.out.println(numberInt);
+                return numberInt;
+
             }
         });
         executor.shutdown();
+        // try 超时处理
         try {
             System.out.println("result:" + result.get());
         } catch (InterruptedException e) {
