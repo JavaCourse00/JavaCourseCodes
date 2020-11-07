@@ -4,14 +4,14 @@ import java.util.concurrent.CyclicBarrier;
 
 public class CyclicBarrierDemo {
     public static void main(String[] args) throws InterruptedException {
-        CyclicBarrier cyclicBarrier = new CyclicBarrier(5, new Runnable() {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(100, new Runnable() {
             @Override
             public void run() {
                 System.out.println("回调>>"+Thread.currentThread().getName());
                 System.out.println("回调>>线程组执行结束");
             }
         });
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 100; i++) {
             new Thread(new readNum(i,cyclicBarrier)).start();
         }
     
