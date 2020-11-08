@@ -41,7 +41,7 @@ public class ReentrantReadWriteLockDemo2 {
 
     public static void main(String[] args) {
         ReentrantReadWriteLockDemo2 demo2 = new ReentrantReadWriteLockDemo2();
-        demo2.readWrite("wangwei");
+        demo2.readWrite("bingfabiancheng");
     }
 
 }
