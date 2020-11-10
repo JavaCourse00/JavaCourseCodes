@@ -15,7 +15,7 @@ public class ThreadMain {
         new Thread(threadB).start();
         System.out.println("这是主线程：");
 
-        ThreadC threadC = new ThreadC();
+        ThreadC threadC = new ThreadC(); 
         FutureTask<String> futureTask = new FutureTask<>(threadC);
         new Thread(futureTask).start();
         System.out.println("这是主线程:begin!");
