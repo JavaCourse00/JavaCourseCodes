@@ -9,7 +9,7 @@ public class Join {
         thread1.setOo(oo);
         thread1.start();
         
-        synchronized (oo) {
+        synchronized (thread1) {
             for (int i = 0; i < 100; i++) {
                 if (i == 20) {
                     try {
@@ -40,7 +40,7 @@ class MyThread extends Thread {
     
     @Override
     public void run() {
-        synchronized (oo) {
+        synchronized (this) {
             for (int i = 0; i < 100; i++) {
                 System.out.println(name + i);
             }
