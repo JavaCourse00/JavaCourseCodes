@@ -1,6 +1,5 @@
 package io.kimmking.springjms;
 
-import io.kimmking.spring01.Student;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

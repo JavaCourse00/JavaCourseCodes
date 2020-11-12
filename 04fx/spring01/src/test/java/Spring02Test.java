@@ -1,6 +1,7 @@
 import io.kimmking.spring02.Klass;
 import org.junit.Assert;
 import org.junit.Test;
+
 import static org.mockito.Mockito.*;
 
 public class Spring02Test {
