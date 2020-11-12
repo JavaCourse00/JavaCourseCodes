@@ -12,7 +12,7 @@ public class SemaphoreDemo2 {
             
             ExecutorService exec = Executors.newCachedThreadPool();
             
-            final Semaphore semaphore = new Semaphore(3);
+            final Semaphore semaphore = new Semaphore(5);
             
             for (int i = 0; i < threadCount; i++) {
                 final int threadNum = i;

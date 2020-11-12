@@ -14,10 +14,10 @@ public class CopyOnWriteArrayListDemo {
         // why Vector 也不安全
 //        List<Integer> list = new ArrayList<Integer>();
 //        List<Integer> list = new LinkedList<>();
-//        List<Integer> list = new Vector<>();
+        List<Integer> list = new Vector<>();
     
         // 只有CopyOnWriteArrayList 安全，不报错
-        List<Integer> list = new CopyOnWriteArrayList();
+        //List<Integer> list = new CopyOnWriteArrayList();
         
         for (int i = 0; i < 10000; i++)
         {

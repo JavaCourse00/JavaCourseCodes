@@ -9,13 +9,16 @@ public class CyclicBarrierDemo {
             public void run() {
                 System.out.println("回调>>"+Thread.currentThread().getName());
                 System.out.println("回调>>线程组执行结束");
+                System.out.println("==>各个子线程执行结束。。。。");
             }
         });
         for (int i = 0; i < 5; i++) {
             new Thread(new readNum(i,cyclicBarrier)).start();
         }
-    
-        System.out.println("==>各个子线程执行结束。。。。");
+        
+               // ==>>>
+        
+        
         System.out.println("==>主线程执行结束。。。。");
         
         //CyclicBarrier 可以重复利用，

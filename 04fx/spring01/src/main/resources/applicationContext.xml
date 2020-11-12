@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <bean id="student123"
+          class="io.kimmking.spring01.Student">
+        <property name="id" value="123" />
+        <property name="name" value="KK123" />
+    </bean>
+    
+    <bean id="student100"
+          class="io.kimmking.spring01.Student">
+        <property name="id" value="100" />
+        <property name="name" value="KK100" />
+    </bean>
+    
+    <bean id="class1" class="io.kimmking.spring02.Klass">
+        <property name="students">
+            <list>
+                <ref bean="student100" />
+                <ref bean="student123" />
+<!--                <bean class="io.kimmking.spring01.Student">-->
+<!--                    <property name="name" value="qq" />-->
+<!--                    <property name="id" value="001" /> -->
+<!--                </bean>-->
+            </list>
+        </property>
+    </bean>
+    
+    
+    <context:component-scan base-package="io.kimmking.spring02" />
+    
+    
+    <bean id="aop1" class="io.kimmking.spring02.Aop1" />
+    
+    <bean id="aop2" class="io.kimmking.spring02.Aop2" />
+    
+<!--    <aop:aspectj-autoproxy proxy-target-class="true" />-->
+    <aop:aspectj-autoproxy  />
+    
+    <aop:config>
+        <aop:pointcut expression="execution(* io.kimmking.aop.*.*(..))" id="p1" /> <!--切点-->
+        <aop:aspect ref="aop1"> <!--切面 -->
+            <aop:around method="around" pointcut-ref="p1" />
+            <aop:before method="startTransaction" pointcut-ref="p1" /> <!--前置通知-->
+            <aop:after-returning method="commitTransaction" pointcut-ref="p1"/> <!--后置通知-->
+        </aop:aspect>
+    </aop:config>
+
+<!--    <context:annotation-config />-->
+<!--    -->
+    <bean id="school" class="io.kimmking.spring02.School"></bean>
+    
+    
+</beans>
