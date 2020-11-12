@@ -40,6 +40,6 @@ Week03 作业题目（周六）：
 5. 将第二周的作业代码整合进来: [homework02](../Week_02/homework02/) 中的代码和pom.xml依赖。
 6. 将 nio01 中的 HttpServer03 代码整合进来作为后端服务，改名为 [BackendServer](https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/com/renfufei/homework03/BackendServer.java), 监听 8088 端口。
 7. 找到Netty官网: https://netty.io/wiki/user-guide-for-4.x.html
-8. 参照官方示例, 编写自己的过滤器 [ProxyBizFilter](https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/com/renfufei/homework03/ProxyBizFilter.java),
-9 可以加入到 [https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/io/github/kimmking/gateway/inbound/HttpInboundHandler.java](HttpInboundHandler.java); 【实际上应该加入到 [HttpInboundInitializer](./nio02/src/main/java/io/github/kimmking/gateway/inbound/HttpInboundInitializer.java) 的初始化方法中】。
+8. 参照官方示例, 编写自己的过滤器 [ProxyBizFilter](https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/com/renfufei/homework03/ProxyBizFilter.java);
+9. 可以加入到 [HttpInboundHandler.java](https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/io/github/kimmking/gateway/inbound/); 【实际上应该加入到 [HttpInboundInitializer](./nio02/src/main/java/io/github/kimmking/gateway/inbound/HttpInboundInitializer.java) 的初始化方法中】。
 10. 修改 [HttpOutboundHandler](https://github.com/renfufei/JAVA-000/blob/main/Week_03/nio02/src/main/java/io/github/kimmking/gateway/outbound/httpclient4/HttpOutboundHandler.java) 类，集成自己写的第二周的作业代码；
