@@ -5,7 +5,7 @@ import java.util.concurrent.CountDownLatch;
 public class CountDownLatchDemo {
     public static void main(String[] args) throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(5);
-        for(int i=0;i<5;i++){
+        for(int i=0;i<10;i++){
             new Thread(new readNum(i,countDownLatch)).start();
         }
         countDownLatch.await(); // 注意跟CyclicBarrier不同，这里在主线程await

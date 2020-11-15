@@ -18,7 +18,7 @@ public class CyclicBarrierDemo2 {
             e.printStackTrace();
         }
         
-        System.out.println("CyclicBarrier重用");
+        System.out.println("====>  CyclicBarrier重用");
         
         for(int i=0;i<N;i++) {
             new Writer(barrier).start();

@@ -23,7 +23,7 @@ public class CompletableFutureDemo {
                 e.printStackTrace();
             }
             return "Hello";
-        }).thenCombine(CompletableFuture.supplyAsync(()->{
+        }).thenCombine(CompletableFuture.supplyAsync(()->{         
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
@@ -34,7 +34,8 @@ public class CompletableFutureDemo {
         System.out.println("thenCombine:"+result3);
     
         CompletableFuture.supplyAsync(() -> "Hello, java course.")
-                .thenApply(String::toUpperCase).thenCompose(s -> CompletableFuture.supplyAsync(s::toLowerCase)).thenAccept(v -> { System.out.println("thenCompose:"+v);});
+                .thenApply(String::toUpperCase).thenCompose(s -> CompletableFuture.supplyAsync(s::toLowerCase))
+                .thenAccept(v -> { System.out.println("thenCompose:"+v);});
         
         // 4.竞争
         System.out.println("=====>4.竞争");
@@ -68,7 +69,7 @@ public class CompletableFutureDemo {
             }
         
             return "Hi Boy";
-        }).exceptionally(e->{
+        }).exceptionally(e->{                // Fluent API      
             System.out.println(e.getMessage());
             return "Hello world!";
         }).join();

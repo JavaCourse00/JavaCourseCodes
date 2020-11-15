@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 
 public class CopyOnWriteArrayListDemo1 {
     private static final int THREAD_POOL_MAX_NUM = 10;
-    //private List<String> mList = new ArrayList<String>();  // ArrayList 无法运行
-    private List<String> mList = new CopyOnWriteArrayList<>();
+    private List<String> mList = new ArrayList<String>();  // ArrayList 无法运行
+    //private List<String> mList = new CopyOnWriteArrayList<>();
     
     public static void main(String args[]) {
         new CopyOnWriteArrayListDemo1().start();
