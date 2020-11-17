@@ -18,9 +18,15 @@ spring:
     enabled: true
     max-connections: 10   #连接池最大连接数
     idle-timeout: 30000   #空闲的连接过期时间，默认为30秒
+    
+    
+    
   data:
     mongodb:
       uri: mongodb://localhost:27017/mydb
+  
+  profiles:
+    active: true
 
 # jms:
 #   pub-sub-domain: true  #默认情况下activemq提供的是queue模式，若要使用topic模式需要配置下面配置
