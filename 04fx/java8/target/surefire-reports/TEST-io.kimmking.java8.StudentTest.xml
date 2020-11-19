@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="io.kimmking.java8.StudentTest" time="0.291" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="D:\tools\jdk8\jre\bin"/>
+    <property name="java.vm.version" value="25.231-b11"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:\kimmking\projects\java8"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="D:\kimmking\projects\java8"/>
+    <property name="java.runtime.version" value="1.8.0_231-b11"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="D:\tools\jdk8\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\QINJIN~1\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="D:\tools\apache-maven-3.6.3-aliyun\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\tools\jdk8\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;D:\Program Files (x86)\IncrediBuild;d:\tools\Gpg4win\..\GnuPG\bin;D:\tools\go\bin;C:\Program Files (x86)\Calibre2\;D:\Program Files\PowerShell\7-preview\preview;D:\tools\Subversion\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\qinjinwei5\AppData\Local\Microsoft\WindowsApps;D:\tools\jdk8\bin;D:\tools\jre8\bin;D:\tools\apache-maven-3.6.3\bin;D:\tools\Git\bin;D:\tools\mysql-5.6.23-winx64\bin;D:\tools;D:\tools\GnuWin32\bin;D:\tools\pgsql\bin;D:\tools\node10;D:\tools\apache-maven-3.6.3-aliyun\bin;D:\tools\VSCode\bin;D:\tools\IntelliJ IDEA 2019.3.3\bin;D:\tools\etcd-v3.4.4;C:\Users\qinjinwei5\go\bin;D:\tools\ffmpeg\bin;C:\Program Files (x86)\Calibre2;D:\tools\Subversion\bin;C:\ProgramData\qinjinwei5\atom\bin;C:\Users\qinjinwei5\AppData\Local\atom\bin;;."/>
+    <property name="maven.conf" value="D:\tools\apache-maven-3.6.3-aliyun\bin\../conf"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="D:\tools\apache-maven-3.6.3-aliyun\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\qinjinwei5"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="GBK"/>
+    <property name="user.name" value="qinjinwei5"/>
+    <property name="java.class.path" value="D:\tools\apache-maven-3.6.3-aliyun\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="D:\tools\jdk8\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean package"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="zh"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_231"/>
+    <property name="java.ext.dirs" value="D:\tools\jdk8\jre\lib\ext;C:\windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="D:\tools\jdk8\jre\lib\resources.jar;D:\tools\jdk8\jre\lib\rt.jar;D:\tools\jdk8\jre\lib\sunrsasign.jar;D:\tools\jdk8\jre\lib\jsse.jar;D:\tools\jdk8\jre\lib\jce.jar;D:\tools\jdk8\jre\lib\charsets.jar;D:\tools\jdk8\jre\lib\jfr.jar;D:\tools\jdk8\jre\classes"/>
+    <property name="sun.stderr.encoding" value="ms936"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\tools\apache-maven-3.6.3-aliyun\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.stdout.encoding" value="ms936"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="io.kimmking.java8.StudentTest" name="KlassTest" time="0.291"/>
+</testsuite>
