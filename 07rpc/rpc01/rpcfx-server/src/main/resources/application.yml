@@ -1,0 +1,6 @@
+server:
+  port: 8080
+  
+  profiles:
+    active: true
+
