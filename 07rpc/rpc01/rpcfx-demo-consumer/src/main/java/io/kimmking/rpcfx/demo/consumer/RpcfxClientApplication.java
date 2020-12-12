@@ -1,18 +1,14 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.demo.consumer;
 
-import com.alibaba.fastjson.parser.ParserConfig;
-import io.kimmking.rpcfx.api.Order;
-import io.kimmking.rpcfx.api.OrderService;
-import io.kimmking.rpcfx.api.User;
-import io.kimmking.rpcfx.api.UserService;
+import io.kimmking.rpcfx.client.Rpcfx;
+import io.kimmking.rpcfx.demo.api.Order;
+import io.kimmking.rpcfx.demo.api.OrderService;
+import io.kimmking.rpcfx.demo.api.User;
+import io.kimmking.rpcfx.demo.api.UserService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RpcfxClientApplication {
-
-	static {
-		ParserConfig.getGlobalInstance().addAccept("io.kimmking");
-	}
 
 	// 二方库
 	// 三方库 lib

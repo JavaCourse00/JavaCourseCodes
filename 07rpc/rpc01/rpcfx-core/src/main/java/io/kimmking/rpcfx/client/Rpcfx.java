@@ -2,6 +2,7 @@ package io.kimmking.rpcfx.client;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResponse;
 import okhttp3.MediaType;
@@ -14,7 +15,12 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class Rpcfx {
+public final class Rpcfx {
+
+    static {
+        ParserConfig.getGlobalInstance().addAccept("io.kimmking");
+    }
+
     public static <T> T create(final Class<T> serviceClass, final String url) {
 
         // 0. 替换动态代理 -> AOP
