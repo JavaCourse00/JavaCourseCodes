@@ -20,7 +20,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>io.kimmking</groupId>
-			<artifactId>rpcfx-api</artifactId>
+			<artifactId>rpcfx-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.kimmking</groupId>
+			<artifactId>rpcfx-demo-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

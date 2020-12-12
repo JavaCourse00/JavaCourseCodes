@@ -3,7 +3,9 @@ package io.kimmking.rpcfx.api;
 public class RpcfxResponse {
 
     private Object result;
+
     private boolean status;
+
     private Exception exception;
 
     public Object getResult() {

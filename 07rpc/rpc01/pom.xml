@@ -16,9 +16,10 @@
 	<description>RPC demo project for Spring Boot</description>
 
 	<modules>
-		<module>rpcfx-api</module>
+		<module>rpcfx-core</module>
 		<module>rpcfx-server</module>
 		<module>rpcfx-client</module>
+		<module>rpcfx-demo-api</module>
 	</modules>
 
 	<properties>

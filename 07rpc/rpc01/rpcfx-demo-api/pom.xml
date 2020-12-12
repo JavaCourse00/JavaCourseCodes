@@ -9,9 +9,9 @@
 <!--		<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
 	</parent>
 	<groupId>io.kimmking</groupId>
-	<artifactId>rpcfx-api</artifactId>
+	<artifactId>rpcfx-demo-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rpcfx-api</name>
+	<name>rpcfx-demo-api</name>
 
 	<properties>
 		<java.version>1.8</java.version>
