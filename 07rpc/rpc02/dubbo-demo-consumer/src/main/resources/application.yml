@@ -1,0 +1,14 @@
+
+spring:
+  application:
+    name: dubbo-demo-consumer
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: none
+dubbo:
+  scan:
+    base-packages: io.kimmking.dubbo.demo.consumer
+  registry:
+    address: zookeeper://localhost:2181
+  metadata-report:
+    address: zookeeper://localhost:2181
