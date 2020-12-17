@@ -7,6 +7,8 @@ import io.kimmking.rpcfx.demo.api.User;
 import io.kimmking.rpcfx.demo.api.UserService;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Random;
+
 @SpringBootApplication
 public class RpcfxClientApplication {
 
@@ -28,9 +30,13 @@ public class RpcfxClientApplication {
 		Order order = orderService.findOrderById(1992129);
 		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));
 
-		// 新加一个OrderService
+		//
+		UserService userService2 = Rpcfx.createFromRegistry(UserService.class, "localhost:2181", new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
 
 //		SpringApplication.run(RpcfxClientApplication.class, args);
 	}
 
 }
+
+
+

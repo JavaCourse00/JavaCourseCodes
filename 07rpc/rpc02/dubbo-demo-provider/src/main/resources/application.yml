@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: dubbo-demo-provider
+
 dubbo:
   scan:
     base-packages: io.kimmking.dubbo.demo.provider
@@ -14,3 +15,12 @@ dubbo:
     address: zookeeper://localhost:2181
   metadata-report:
     address: zookeeper://localhost:2181
+  application:
+    qosEnable: true
+    qosPort: 22222
+    qosAcceptForeignIp: true
+    qos-enable-compatible: true
+    qos-host-compatible: localhost
+    qos-port-compatible: 22222
+    qos-accept-foreign-ip-compatible: true
+    qos-host: localhost

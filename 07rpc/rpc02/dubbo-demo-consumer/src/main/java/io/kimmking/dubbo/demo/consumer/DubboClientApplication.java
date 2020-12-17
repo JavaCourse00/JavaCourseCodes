@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class DubboClientApplication {
 
-	@DubboReference(version = "1.0.0", url = "dubbo://127.0.0.1:12345")
+	@DubboReference(version = "1.0.0") //, url = "dubbo://127.0.0.1:12345")
 	private UserService userService;
 
-	@DubboReference(version = "1.0.0", url = "dubbo://127.0.0.1:12345")
+	@DubboReference(version = "1.0.0") //, url = "dubbo://127.0.0.1:12345")
 	private OrderService orderService;
 
 	public static void main(String[] args) {
