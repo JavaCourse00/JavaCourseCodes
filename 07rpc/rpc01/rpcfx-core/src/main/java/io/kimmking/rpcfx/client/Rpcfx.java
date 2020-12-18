@@ -37,10 +37,10 @@ public final class Rpcfx {
 
     }
 
-    public static <T> T create(final Class<T> serviceClass, final String url, Filter filter) {
+    public static <T> T create(final Class<T> serviceClass, final String url, Filter... filters) {
 
         // 0. 替换动态代理 -> AOP
-        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url, filter));
+        return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass}, new RpcfxInvocationHandler(serviceClass, url, filters));
 
     }
 
@@ -73,9 +73,11 @@ public final class Rpcfx {
             request.setMethod(method.getName());
             request.setParams(params);
 
-            for (Filter filter : filters) {
-                if(!filter.filter(request)) {
-                    return null;
+            if (null!=filters) {
+                for (Filter filter : filters) {
+                    if (!filter.filter(request)) {
+                        return null;
+                    }
                 }
             }
 

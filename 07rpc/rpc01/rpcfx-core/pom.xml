@@ -25,9 +25,28 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.16</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
 			<version>3.12.2</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-client</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>5.1.0</version>
 		</dependency>
 
 		<dependency>
