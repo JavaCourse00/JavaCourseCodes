@@ -3,6 +3,7 @@ package io.kimmking.rpcfx.demo.provider;
 import io.kimmking.rpcfx.api.RpcfxRequest;
 import io.kimmking.rpcfx.api.RpcfxResolver;
 import io.kimmking.rpcfx.api.RpcfxResponse;
+import io.kimmking.rpcfx.api.ServiceProviderDesc;
 import io.kimmking.rpcfx.demo.api.OrderService;
 import io.kimmking.rpcfx.demo.api.UserService;
 import io.kimmking.rpcfx.server.RpcfxInvoker;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.UnknownHostException;
 
 @SpringBootApplication
 @RestController
@@ -59,15 +58,15 @@ public class RpcfxServerApplication {
 
 	// annotation
 
-
-	@Bean(name = "io.kimmking.rpcfx.demo.api.UserService")
-	public UserService createUserService(){
-		return new UserServiceImpl();
-	}
-
-	@Bean(name = "io.kimmking.rpcfx.demo.api.OrderService")
-	public OrderService createOrderService(){
-		return new OrderServiceImpl();
-	}
+//
+//	@Bean(name = "io.kimmking.rpcfx.demo.api.UserService")
+//	public UserService createUserService(){
+//		return new UserServiceImpl();
+//	}
+//
+//	@Bean(name = "io.kimmking.rpcfx.demo.api.OrderService")
+//	public OrderService createOrderService(){
+//		return new OrderServiceImpl();
+//	}
 
 }

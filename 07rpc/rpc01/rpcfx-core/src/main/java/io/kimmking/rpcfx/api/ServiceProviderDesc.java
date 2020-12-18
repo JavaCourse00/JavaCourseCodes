@@ -1,4 +1,4 @@
-package io.kimmking.rpcfx.demo.provider;
+package io.kimmking.rpcfx.api;
 
 public class ServiceProviderDesc {
 
