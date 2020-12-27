@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+    <diskStore path="java.io.tmpdir" />
+    <defaultCache eternal="false" maxElementsInMemory="1000"
+                  overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+                  timeToLiveSeconds="600" memoryStoreEvictionPolicy="LRU" />
+    <cache
+            name="userCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="300"
+            timeToLiveSeconds="300"
+            overflowToDisk="false"
+            memoryStoreEvictionPolicy="LRU">
+        <!-- 配置缓存事件监听器 replicateAsynchronously 操作是否异步,默认值为true. replicatePuts 添加操作是否同步到集群内的其他缓存,默认为true.
+            replicateUpdates 更新操作是否同步到集群内的其他缓存,默认为true. replicateUpdatesViaCopy 更新之后的对象是否复制到集群中的其他缓存(true);
+            replicateRemovals 删除操作是否同步到集群内的其他缓存,默认为true. -->
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="
+                    replicateAsynchronously=true,
+                    replicatePuts=true,
+                    replicateUpdates=true,
+                    replicateUpdatesViaCopy=true,
+                    replicateRemovals=true " />
+
+        <!-- 初始化缓存，以及自动设置 -->
+        <bootstrapCacheLoaderFactory
+                class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"
+                properties="bootstrapAsynchronously=true" />
+    </cache>
+
+</ehcache>

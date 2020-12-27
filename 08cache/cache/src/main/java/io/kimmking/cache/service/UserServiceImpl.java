@@ -1,0 +1,27 @@
+package io.kimmking.cache.service;
+
+import io.kimmking.cache.entity.User;
+import io.kimmking.cache.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Cacheable(key="#id",value="userCache")
+    public User find(int id) {
+        return userMapper.find(id);
+    }
+
+    @Cacheable(key="LIST",value="userCache")
+    public List<User> list(){
+        return userMapper.list();
+    }
+
+}
