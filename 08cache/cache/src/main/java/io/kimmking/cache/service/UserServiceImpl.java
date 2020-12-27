@@ -14,11 +14,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
+    // 开启spring cache
     @Cacheable(key="#id",value="userCache")
     public User find(int id) {
         return userMapper.find(id);
     }
 
+    // 开启spring cache
     @Cacheable(key="LIST",value="userCache")
     public List<User> list(){
         return userMapper.list();
