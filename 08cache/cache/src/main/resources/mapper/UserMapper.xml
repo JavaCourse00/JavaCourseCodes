@@ -3,9 +3,9 @@
 <mapper namespace="io.kimmking.cache.mapper.UserMapper">
 
 <!--    开启mybatis cache  -->
-    <cache type="org.mybatis.caches.ehcache.LoggingEhcache">
-        <property name="memoryStoreEvictionPolicy" value="LRU"/>
-    </cache>
+<!--    <cache type="org.mybatis.caches.ehcache.LoggingEhcache">-->
+<!--        <property name="memoryStoreEvictionPolicy" value="LRU"/>-->
+<!--    </cache>-->
 
     <resultMap id="BaseResultMap" type="io.kimmking.cache.entity.User">
         <result column="id" jdbcType="INTEGER" property="id" />

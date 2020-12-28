@@ -7,6 +7,18 @@ spring:
     password:
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
+#  cache:
+#    type: redis
+  redis:
+    host: localhost
+    lettuce:
+      pool:
+        max-active: 32
+        max-wait: 10ms
+
+#    type: ehcache
+#    ehcache:
+#      config: ehcache.xml
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
