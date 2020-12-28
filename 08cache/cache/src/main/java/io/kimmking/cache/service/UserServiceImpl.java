@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     // 开启spring cache
     @Cacheable //(key="#id",value="userCache")
     public User find(int id) {
+        //System.out.println(" ==> find " + id);
         return userMapper.find(id);
     }
 
