@@ -1,4 +1,4 @@
-package io.kimmking.cache;
+package io.kimmking.cache.sentinel;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;

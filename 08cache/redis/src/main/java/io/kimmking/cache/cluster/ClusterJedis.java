@@ -1,4 +1,4 @@
-package io.kimmking.cache;
+package io.kimmking.cache.cluster;
 
 import lombok.SneakyThrows;
 import redis.clients.jedis.HostAndPort;

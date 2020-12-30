@@ -1,6 +1,8 @@
 package io.kimmking.cache;
 
 import com.alibaba.fastjson.JSON;
+import io.kimmking.cache.cluster.ClusterJedis;
+import io.kimmking.cache.sentinel.SentinelJedis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import redis.clients.jedis.Jedis;
@@ -54,7 +56,7 @@ public class RedisApplication {
 		//  3) 分配槽位，确认分配成功
 		//  4) 测试简单的get/set是否成功
 		// 然后运行如下代码
-//		JedisCluster cluster = ClusterJedis.getJedisCluster();
+// 		JedisCluster cluster = ClusterJedis.getJedisCluster();
 //		for (int i = 0; i < 100; i++) {
 //			cluster.set("cluster:" + i, "data:" + i);
 //		}
