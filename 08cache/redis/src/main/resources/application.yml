@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    io:
+      kimmking:
+        cache : info
