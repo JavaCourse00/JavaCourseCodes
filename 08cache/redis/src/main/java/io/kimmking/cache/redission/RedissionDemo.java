@@ -40,4 +40,6 @@ public class RedissionDemo {
         }
     }
 
+    // 可参阅：https://www.jianshu.com/p/47fd7f86c848
+
 }
