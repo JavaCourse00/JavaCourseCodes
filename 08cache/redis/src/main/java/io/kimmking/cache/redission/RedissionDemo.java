@@ -13,7 +13,7 @@ public class RedissionDemo {
     @SneakyThrows
     public static void main(String[] args) {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        config.useSingleServer().setAddress("redis://127.0.0.1:6380");
         //config.useSingleServer().setPassword("");
 
         final RedissonClient client = Redisson.create(config);
@@ -38,6 +38,7 @@ public class RedissionDemo {
             Thread.sleep(2000);
             System.out.println(rmap.get("rkey:10"));
         }
+
     }
 
     // 可参阅：https://www.jianshu.com/p/47fd7f86c848

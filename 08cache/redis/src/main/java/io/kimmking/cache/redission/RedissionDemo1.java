@@ -10,7 +10,7 @@ public class RedissionDemo1 {
 
     public static void main(String[] args) {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        config.useSingleServer().setAddress("redis://127.0.0.1:6380");
         //config.useSingleServer().setPassword("");
 
         final RedissonClient client = Redisson.create(config);
