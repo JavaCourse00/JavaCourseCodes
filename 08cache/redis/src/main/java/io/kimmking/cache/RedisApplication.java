@@ -25,14 +25,16 @@ public class RedisApplication {
 		// C2.基于sentinel和连接池的demo
 //		Jedis sjedis = SentinelJedis.getJedis();
 //		System.out.println(sjedis.info());
-//		sjedis.set("uptime", new Long(System.currentTimeMillis()).toString());
-//		System.out.println(sjedis.get("uptime"));
+//		sjedis.set("uptime2", new Long(System.currentTimeMillis()).toString());
+//		System.out.println(sjedis.get("uptime2"));
 //		SentinelJedis.close();
 
 		// C3. 直接连接sentinel进行操作
-//		Jedis jedis = new Jedis("localhost", 26380); // 连接到sentinel
-//		List<Map<String, String>> masters = jedis.sentinelMasters();
+//		Jedis jedisSentinel = new Jedis("localhost", 26380); // 连接到sentinel
+//		List<Map<String, String>> masters = jedisSentinel.sentinelMasters();
 //		System.out.println(JSON.toJSONString(masters));
+//		List<Map<String, String>> slaves = jedisSentinel.sentinelSlaves("mymaster");
+//		System.out.println(JSON.toJSONString(slaves));
 
 
 		// 作业：
@@ -48,11 +50,11 @@ public class RedisApplication {
 		// 4. 使用C3的方式，使用java代码手动操作sentinel
 
 
-		// C4. Cluster
+		// C4. Redis Cluster
 		// 作业：
-		// 5.使用命令行配置cluster:
+		// 5.使用命令行配置Redis cluster:
 		//  1) 以cluster方式启动redis-server
-		//  2) 添加cluster节点，确认集群节点数目
+		//  2) 用meet，添加cluster节点，确认集群节点数目
 		//  3) 分配槽位，确认分配成功
 		//  4) 测试简单的get/set是否成功
 		// 然后运行如下代码

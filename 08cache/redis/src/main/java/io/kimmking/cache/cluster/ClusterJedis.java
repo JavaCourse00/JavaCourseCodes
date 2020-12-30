@@ -19,6 +19,7 @@ public final class ClusterJedis {
         // 添加节点
         hostAndPortsSet.add(new HostAndPort("127.0.0.1", 6379));
         hostAndPortsSet.add(new HostAndPort("127.0.0.1", 6380));
+        // hostAndPortsSet.add(new HostAndPort("127.0.0.1", 6381));
 
         // Jedis连接池配置
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
