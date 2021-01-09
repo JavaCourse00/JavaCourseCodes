@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration>
+
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d - %c -%-4r [%t] %-5p %x - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="org.apache.kafka" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+    <root>
+        <level value ="INFO"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </root>
+
+</log4j:configuration>
