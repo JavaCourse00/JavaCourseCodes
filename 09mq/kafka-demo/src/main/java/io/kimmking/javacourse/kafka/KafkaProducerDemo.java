@@ -3,17 +3,10 @@ package io.kimmking.javacourse.kafka;
 import io.kimmking.javacourse.kafka.kimmking.ConsumerImpl;
 import io.kimmking.javacourse.kafka.kimmking.ProducerImpl;
 
-public class KafkaDemo {
+public class KafkaProducerDemo {
 
     public static void main(String[] args) {
-        //testProducer();
-        testConsumer();
-    }
-
-    private static void testConsumer() {
-        ConsumerImpl consumer = new ConsumerImpl();
-        consumer.consumeOrder();
-
+        testProducer();
     }
 
     private static void testProducer() {
@@ -22,7 +15,5 @@ public class KafkaDemo {
             producer.send(new Order(1000L + i,System.currentTimeMillis(),"USD2CNY", 6.5d));
             producer.send(new Order(2000L + i,System.currentTimeMillis(),"USD2CNY", 6.51d));
         }
-
     }
-
 }

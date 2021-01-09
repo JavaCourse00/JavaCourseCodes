@@ -21,7 +21,7 @@ public class ConsumerImpl implements Consumer {
 //        properties.put("enable.auto.commit", false);
 //        properties.put("isolation.level", "read_committed");
 //        properties.put("auto.offset.reset", "latest");
-        properties.put("group.id", "java0-kimmking");
+        properties.put("group.id", "java1-kimmking");
         properties.put("bootstrap.servers", "localhost:9092");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -58,7 +58,7 @@ public class ConsumerImpl implements Consumer {
             e.printStackTrace();
         } finally {
             try {
-                consumer.commitSync(currentOffsets);
+                consumer.commitSync();//currentOffsets);
             } catch (Exception e) {
                 consumer.close();
             }
