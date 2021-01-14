@@ -90,7 +90,7 @@ public class RabbitConfig {
 
     @Bean
     public Binding bindingA() {
-        return BindingBuilder.bind(queueA()).to(defaultExchange()).with(RabbitConfig.ROUTINGKEY_A);
+        return BindingBuilder.bind(queueA()).to(defaultExchange()).with(RabbitConfig.ROUTINGKEY_B);
     }
     @Bean
     public Binding bindingB() {

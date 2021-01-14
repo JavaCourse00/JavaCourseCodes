@@ -12,7 +12,7 @@ public class ProducerDemo {
     @SneakyThrows
     public ProducerDemo(){
         stringProducer = Config.createClient().newProducer(Schema.STRING)
-                .topic("my-topic")
+                .topic("my-kk")
                 .create();
     }
 

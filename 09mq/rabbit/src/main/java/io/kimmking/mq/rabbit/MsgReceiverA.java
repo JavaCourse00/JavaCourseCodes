@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(queues = RabbitConfig.QUEUE_A)
 @Slf4j
-public class MsgReceiverA {
+public class MsgReceiverA { //guava ,  EventBus 的一些语法糖
 
     @RabbitHandler
     public void process(String content) {

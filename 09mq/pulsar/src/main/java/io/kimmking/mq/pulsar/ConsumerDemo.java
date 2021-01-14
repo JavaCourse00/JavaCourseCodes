@@ -12,7 +12,7 @@ public class ConsumerDemo {
     public void consume() {
 
         Consumer consumer = Config.createClient().newConsumer()
-                .topic("my-topic")
+                .topic("my-kk")
                 .subscriptionName("my-subscription")
                 .subscribe();
 

@@ -3,7 +3,7 @@ package io.kimmking.kmq.core;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class KmqBroker {
+public final class KmqBroker { // Broker+Connection
 
     public static final int CAPACITY = 10000;
 

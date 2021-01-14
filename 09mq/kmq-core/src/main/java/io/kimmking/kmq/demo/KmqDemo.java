@@ -31,7 +31,7 @@ public class KmqDemo {
         }).start();
 
         KmqProducer producer = broker.createProducer();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             Order order = new Order(1000L + i, System.currentTimeMillis(), "USD2CNY", 6.51d);
             producer.send(topic, new KmqMessage(null, order));
         }
