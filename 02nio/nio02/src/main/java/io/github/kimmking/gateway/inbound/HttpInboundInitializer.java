@@ -28,11 +28,7 @@ public class HttpInboundInitializer extends ChannelInitializer<SocketChannel> {
 		p.addLast(new HttpServerCodec());
 		//p.addLast(new HttpServerExpectContinueHandler());
 		p.addLast(new HttpObjectAggregator(1024 * 1024));
-		p.addLast(new HttpInboundHandler(this.proxyServer, new HttpRequestFilter() {
-			@Override
-			public void filter(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
-				fullRequest.headers().set("mao", "soul");
-			}
-		}));
+		p.addLast(new HttpInboundHandler(this.proxyServer,
+				(fullRequest, ctx) -> fullRequest.headers().set("mao", "soul")));
 	}
 }
