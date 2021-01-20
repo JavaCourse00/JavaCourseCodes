@@ -40,9 +40,9 @@ public class HttpOutboundHandler {
 
     public HttpOutboundHandler(List<String> backends) {
 
-        this.backendUrls = backendUrls.stream().map(this::formatUrl).collect(Collectors.toList());
+        this.backendUrls = backends.stream().map(this::formatUrl).collect(Collectors.toList());
 
-        int cores = Runtime.getRuntime().availableProcessors() * 2;
+        int cores = Runtime.getRuntime().availableProcessors();
         long keepAliveTime = 1000;
         int queueSize = 2048;
         RejectedExecutionHandler handler = new ThreadPoolExecutor.CallerRunsPolicy();//.DiscardPolicy();
