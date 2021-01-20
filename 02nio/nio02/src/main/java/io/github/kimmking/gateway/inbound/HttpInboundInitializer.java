@@ -1,16 +1,21 @@
 package io.github.kimmking.gateway.inbound;
 
+import io.github.kimmking.gateway.filter.HttpRequestFilter;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 
+import java.util.List;
+
 public class HttpInboundInitializer extends ChannelInitializer<SocketChannel> {
 	
-	private String proxyServer;
+	private List<String> proxyServer;
 	
-	public HttpInboundInitializer(String proxyServer) {
+	public HttpInboundInitializer(List<String> proxyServer) {
 		this.proxyServer = proxyServer;
 	}
 	
@@ -23,6 +28,11 @@ public class HttpInboundInitializer extends ChannelInitializer<SocketChannel> {
 		p.addLast(new HttpServerCodec());
 		//p.addLast(new HttpServerExpectContinueHandler());
 		p.addLast(new HttpObjectAggregator(1024 * 1024));
-		p.addLast(new HttpInboundHandler(this.proxyServer));
+		p.addLast(new HttpInboundHandler(this.proxyServer, new HttpRequestFilter() {
+			@Override
+			public void filter(FullHttpRequest fullRequest, ChannelHandlerContext ctx) {
+				fullRequest.headers().set("mao", "soul");
+			}
+		}));
 	}
 }

@@ -1,6 +1,9 @@
 package io.github.kimmking.gateway.outbound.httpclient4;
 
 
+import io.github.kimmking.gateway.filter.HttpRequestFilter;
+import io.github.kimmking.gateway.router.HttpEndpointRouter;
+import io.github.kimmking.gateway.router.RandomHttpEndpointRouter;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,7 +20,11 @@ import org.apache.http.impl.nio.reactor.IOReactorConfig;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.*;
+import java.util.logging.Filter;
+import java.util.stream.Collectors;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.NO_CONTENT;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
@@ -27,10 +34,14 @@ public class HttpOutboundHandler {
     
     private CloseableHttpAsyncClient httpclient;
     private ExecutorService proxyService;
-    private String backendUrl;
-    
-    public HttpOutboundHandler(String backendUrl){
-        this.backendUrl = backendUrl.endsWith("/")?backendUrl.substring(0,backendUrl.length()-1):backendUrl;
+    private List<String> backendUrls;
+
+    HttpEndpointRouter router = new RandomHttpEndpointRouter();
+
+    public HttpOutboundHandler(List<String> backends) {
+
+        this.backendUrls = backendUrls.stream().map(this::formatUrl).collect(Collectors.toList());
+
         int cores = Runtime.getRuntime().availableProcessors() * 2;
         long keepAliveTime = 1000;
         int queueSize = 2048;
@@ -53,9 +64,15 @@ public class HttpOutboundHandler {
                 .build();
         httpclient.start();
     }
+
+    private String formatUrl(String backend) {
+        return backend.endsWith("/")?backend.substring(0,backend.length()-1):backend;
+    }
     
-    public void handle(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx) {
-        final String url = this.backendUrl + fullRequest.uri();
+    public void handle(final FullHttpRequest fullRequest, final ChannelHandlerContext ctx, HttpRequestFilter filter) {
+        String backendUrl = router.route(this.backendUrls);
+        final String url = backendUrl + fullRequest.uri();
+        filter.filter(fullRequest, ctx);
         proxyService.submit(()->fetchGet(fullRequest, ctx, url));
     }
     
@@ -63,6 +80,8 @@ public class HttpOutboundHandler {
         final HttpGet httpGet = new HttpGet(url);
         //httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_CLOSE);
         httpGet.setHeader(HTTP.CONN_DIRECTIVE, HTTP.CONN_KEEP_ALIVE);
+        httpGet.setHeader("mao", inbound.headers().get("mao"));
+
         httpclient.execute(httpGet, new FutureCallback<HttpResponse>() {
             @Override
             public void completed(final HttpResponse endpointResponse) {
