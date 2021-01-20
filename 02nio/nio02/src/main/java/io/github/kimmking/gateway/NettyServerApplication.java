@@ -19,7 +19,7 @@ public class NettyServerApplication {
     
         int port = Integer.parseInt(proxyPort);
         System.out.println(GATEWAY_NAME + " " + GATEWAY_VERSION +" starting...");
-        HttpInboundServer server = new HttpInboundServer(port, Arrays.asList("http://localhost:8081","http://localhost:8082"));
+        HttpInboundServer server = new HttpInboundServer(port, Arrays.asList("http://localhost:8801","http://localhost:8802"));
         System.out.println(GATEWAY_NAME + " " + GATEWAY_VERSION +" started at http://localhost:" + port + " for server:" + proxyServer);
         try {
             server.run();
