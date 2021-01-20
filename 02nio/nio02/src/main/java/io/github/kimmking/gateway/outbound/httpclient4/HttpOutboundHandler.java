@@ -1,7 +1,9 @@
 package io.github.kimmking.gateway.outbound.httpclient4;
 
 
+import io.github.kimmking.gateway.filter.HeaderHttpResponseFilter;
 import io.github.kimmking.gateway.filter.HttpRequestFilter;
+import io.github.kimmking.gateway.filter.HttpResponseFilter;
 import io.github.kimmking.gateway.router.HttpEndpointRouter;
 import io.github.kimmking.gateway.router.RandomHttpEndpointRouter;
 import io.netty.buffer.Unpooled;
@@ -36,6 +38,7 @@ public class HttpOutboundHandler {
     private ExecutorService proxyService;
     private List<String> backendUrls;
 
+    HttpResponseFilter filter = new HeaderHttpResponseFilter();
     HttpEndpointRouter router = new RandomHttpEndpointRouter();
 
     public HttpOutboundHandler(List<String> backends) {
@@ -121,9 +124,12 @@ public class HttpOutboundHandler {
 //            System.out.println(body.length);
     
             response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(body));
+
             response.headers().set("Content-Type", "application/json");
             response.headers().setInt("Content-Length", Integer.parseInt(endpointResponse.getFirstHeader("Content-Length").getValue()));
-    
+
+            filter.filter(response);
+
 //            for (Header e : endpointResponse.getAllHeaders()) {
 //                //response.headers().set(e.getName(),e.getValue());
 //                System.out.println(e.getName() + " => " + e.getValue());
