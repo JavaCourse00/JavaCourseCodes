@@ -7,7 +7,7 @@ public class Counter {
     public static int B=10;
     
     private volatile int sum = 0;
-    public synchronized void incr() {
+    public void incr() {
         sum=sum+1;
     }
     public int getSum() {

@@ -6,10 +6,10 @@ public class Join {
         Object oo = new Object();
     
         MyThread thread1 = new MyThread("thread1 -- ");
-        thread1.setOo(oo);
+        thread1.setOo(thread1);
         thread1.start();
         
-        synchronized (thread1) {
+        synchronized (thread1) {  // 这里用oo或thread1/this
             for (int i = 0; i < 100; i++) {
                 if (i == 20) {
                     try {
@@ -40,7 +40,7 @@ class MyThread extends Thread {
     
     @Override
     public void run() {
-        synchronized (this) {
+        synchronized (this) { // 这里用oo或this，效果不同
             for (int i = 0; i < 100; i++) {
                 System.out.println(name + i);
             }
