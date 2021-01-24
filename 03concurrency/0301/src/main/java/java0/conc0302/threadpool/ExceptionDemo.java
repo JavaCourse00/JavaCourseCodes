@@ -11,22 +11,20 @@ public class ExceptionDemo {
     
         try {
             Future<Double> future = executorService.submit(() -> {
-                int a = 1;
-                return 10.0/(a-1);
+                throw new RuntimeException("executorService.submit()");
             });
     
             double b = future.get();
             System.out.println(b);
             
         } catch (Exception ex) {
-            System.out.println("catch execute");
+            System.out.println("catch submit");
             ex.printStackTrace();
         }
         
         try {
             executorService.execute(() -> {
-                    int a = 1;
-                    float b = 10/(a-1);
+                  throw new RuntimeException("executorService.execute()");
                 });
         } catch (Exception ex) {
             System.out.println("catch execute");
