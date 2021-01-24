@@ -22,14 +22,14 @@ public class NettyHttpServer {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.option(ChannelOption.SO_BACKLOG, 128)
-                    .option(ChannelOption.TCP_NODELAY, true)
-                    .option(ChannelOption.SO_KEEPALIVE, true)
-                    .option(ChannelOption.SO_REUSEADDR, true)
-                    .option(ChannelOption.SO_RCVBUF, 32 * 1024)
-                    .option(ChannelOption.SO_SNDBUF, 32 * 1024)
-                    .option(EpollChannelOption.SO_REUSEPORT, true)
+                    .childOption(ChannelOption.TCP_NODELAY, true)
                     .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+                    .childOption(ChannelOption.SO_REUSEADDR, true)
+                    .childOption(ChannelOption.SO_RCVBUF, 32 * 1024)
+                    .childOption(ChannelOption.SO_SNDBUF, 32 * 1024)
+                    .childOption(EpollChannelOption.SO_REUSEPORT, true)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
 
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
