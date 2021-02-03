@@ -16,7 +16,7 @@ public class LombokDemo {
         student1.setName("KK01");
         System.out.println(student1.toString());
         
-        Student student2 = new Student(2, "KK02");
+        Student student2 = new Student(2, "KK02", null, null);
         System.out.println(student2.toString());
     }
     

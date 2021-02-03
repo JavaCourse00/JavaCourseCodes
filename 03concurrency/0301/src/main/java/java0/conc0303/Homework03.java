@@ -14,6 +14,7 @@ public class Homework03 {
     public static void main(String[] args) {
         
         long start=System.currentTimeMillis();
+
         // 在这里创建一个线程或线程池，
         // 异步执行 下面方法
     

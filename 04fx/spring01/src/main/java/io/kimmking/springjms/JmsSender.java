@@ -8,7 +8,7 @@ public class JmsSender {
     
     public static void main( String[] args )
     {
-        Student student2 = new Student(200, "KK0200");
+        Student student2 = new Student(201, "KK0201", null, null);
         
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:springjms-sender.xml");
         
