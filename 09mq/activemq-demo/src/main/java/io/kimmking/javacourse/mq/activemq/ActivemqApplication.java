@@ -62,9 +62,9 @@ public class ActivemqApplication {
                 producer.send(message);
             }
 
-            Thread.sleep(2000);
-            session.close();
-            conn.close();
+//            Thread.sleep(2000);
+//            session.close();
+//            conn.close();
 
 
         } catch (Exception e) {

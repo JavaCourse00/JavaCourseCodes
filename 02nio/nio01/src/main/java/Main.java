@@ -10,7 +10,7 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-        Map<String, Class> map = new HashMap<>();
+        Map<String, Class> map = new HashMap();
         map.put("1", HttpServer01.class);
         map.put("2", HttpServer02.class);
         map.put("3", HttpServer03.class);
