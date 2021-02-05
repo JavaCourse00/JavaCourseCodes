@@ -4,8 +4,6 @@ package io.byk.activemq;
 import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_QUEUE;
 import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_TOPIC;
 
-import java.util.Queue;
-
 import javax.annotation.Resource;
 
 import org.springframework.boot.ApplicationArguments;
@@ -18,6 +16,8 @@ import io.byk.activemq.topic.TopicPublisher;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 启动类
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-05
  */
@@ -35,11 +35,12 @@ public class JmsActiveMqApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // 测试队列
         for (int i = 0; i < 10; i++) {
             String message = "队列消息" + i;
             queueProducer.sendMessage(ACTIVE_MQ_QUEUE, message);
         }
-
+        // 测试主题
         for (int i = 0; i < 10; i++) {
             String message = "主题消息" + i;
             topicPublisher.sendMessage(ACTIVE_MQ_TOPIC, message);

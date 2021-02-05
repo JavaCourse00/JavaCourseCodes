@@ -9,6 +9,8 @@ import org.springframework.jms.config.JmsListenerContainerFactory;
 import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 
 /**
+ * ContainerFactor 配置
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-05
  */
