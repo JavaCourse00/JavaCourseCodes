@@ -1,4 +1,4 @@
-package io.byk.activemq.config;
+package io.byk.config;
 
 /**
  * 常量类
@@ -11,5 +11,6 @@ public class ActiveMqConfig {
     public static final String ACTIVE_MQ_QUEUE = "test.queue";
     // 测试主题
     public static final String ACTIVE_MQ_TOPIC = "test.topic";
-    // 目标地址，61616 端口为 JMS 协议，具体查看在 apache-activemq-5.16.1/conf/activemq.xml
+    // 队列大小
+    public static final Integer QUEUE_SIZE = 10;
 }

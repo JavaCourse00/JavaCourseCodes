@@ -1,8 +1,8 @@
-package io.byk.activemq;
+package io.byk.activemq.jms;
 
 
-import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_QUEUE;
-import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_TOPIC;
+import static io.byk.config.ActiveMqConfig.ACTIVE_MQ_QUEUE;
+import static io.byk.config.ActiveMqConfig.ACTIVE_MQ_TOPIC;
 
 import javax.annotation.Resource;
 
@@ -11,8 +11,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import io.byk.activemq.queue.QueueProducer;
-import io.byk.activemq.topic.TopicPublisher;
+import io.byk.activemq.jms.queue.QueueProducer;
+import io.byk.activemq.jms.topic.TopicPublisher;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -1,6 +1,6 @@
 spring:
   activemq:
-    broker-url: tcp://127.0.0.1:61616
+    broker-url: tcp://127.0.0.1:61616 # 目标地址，61616 端口为 JMS 协议，具体查看在 apache-activemq-5.16.1/conf/activemq.xml
     user: admin
     password: admin
     pool:

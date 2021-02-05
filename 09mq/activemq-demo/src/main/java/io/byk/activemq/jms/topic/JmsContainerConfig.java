@@ -1,4 +1,4 @@
-package io.byk.activemq.topic;
+package io.byk.activemq.jms.topic;
 
 import javax.jms.ConnectionFactory;
 

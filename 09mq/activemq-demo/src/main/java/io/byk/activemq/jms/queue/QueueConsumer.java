@@ -1,6 +1,6 @@
-package io.byk.activemq.queue;
+package io.byk.activemq.jms.queue;
 
-import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_QUEUE;
+import static io.byk.config.ActiveMqConfig.ACTIVE_MQ_QUEUE;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;

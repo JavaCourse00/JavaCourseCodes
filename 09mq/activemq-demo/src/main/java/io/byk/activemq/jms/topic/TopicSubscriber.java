@@ -1,6 +1,6 @@
-package io.byk.activemq.topic;
+package io.byk.activemq.jms.topic;
 
-import static io.byk.activemq.config.ActiveMqConfig.ACTIVE_MQ_TOPIC;
+import static io.byk.config.ActiveMqConfig.ACTIVE_MQ_TOPIC;
 
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
