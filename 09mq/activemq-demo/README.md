@@ -8,7 +8,7 @@
 
 > - 一个程序往表里写新订单，标记状态为未处理 (status=0);
 > - 另一个程序每隔 100ms 定时从表里读取所有 status=0 的订单，打印一下订单数据，然后改成完成 status=1；
-> - **TODO （挑战☆）考虑失败重试策略，考虑多个消费程序如何协作。**
+> - （挑战☆）考虑失败重试策略，考虑多个消费程序如何协作。
 
 #### 解决org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)问题
 
