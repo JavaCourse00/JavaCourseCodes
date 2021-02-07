@@ -23,3 +23,19 @@ mybatis:
 
 建议不要在创建表的过程中使用mysql保留字，避免后期造成麻烦
 
+#### ActiveMQ序列化异常Forbidden class ! This class is not trusted to be serialized as ObjectMessage payload
+
+在`application.yml`文件下添加配置信息：
+
+```
+spring:
+  activemq:
+    broker-url: tcp://127.0.0.1:61616 # 目标地址，61616 端口为 JMS 协议，具体查看在 apache-activemq-5.16.1/conf/activemq.xml
+    user: admin
+    password: admin
+    pool:
+      enabled: false
+    packages:
+      trust-all: true
+```
+

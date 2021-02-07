@@ -1,5 +1,7 @@
 package io.order.model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Order {
+public class Order implements Serializable {
     /**
      * 主键ID
      */
