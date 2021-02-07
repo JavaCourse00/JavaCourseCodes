@@ -11,5 +11,4 @@ spring:
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
-  type-aliases-package: io.byk.
   mapper-locations: classpath:mapper/*.xml
