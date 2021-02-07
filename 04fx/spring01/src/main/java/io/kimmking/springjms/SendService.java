@@ -1,5 +1,6 @@
 package io.kimmking.springjms;
 
+import com.alibaba.fastjson.JSON;
 import io.kimmking.spring01.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -19,7 +20,7 @@ public class SendService {
         jmsTemplate.send("test.queue", new MessageCreator() {
             
             public Message createMessage(Session session) throws JMSException {
-                return session.createObjectMessage(user);
+                return session.createObjectMessage(JSON.toJSONString(user));
             }
         });
     }

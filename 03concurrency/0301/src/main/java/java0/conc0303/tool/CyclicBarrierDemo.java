@@ -39,9 +39,9 @@ public class CyclicBarrierDemo {
             synchronized (this){
                 System.out.println("id:"+id+","+Thread.currentThread().getName());
                 try {
-                    //cyc.await();
+                    cyc.await();
                     System.out.println("线程组任务" + id + "结束，其他任务继续");
-                    cyc.await();   // 注意跟CountDownLatch不同，这里在子线程await
+                    //cyc.await();   // 注意跟CountDownLatch不同，这里在子线程await
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
