@@ -22,9 +22,8 @@ public class QueueProducer {
     @Resource
     OrderMapper orderMapper;
 
-    public String sendMessage() throws IllegalAccessException {
+    public String sendMessage(String orderId) throws IllegalAccessException {
         // STEP 1: 生成订单
-        String orderId = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
         Order order = new Order(0, orderId, 0);
         // STEP 2: 发送订单消息
         int success = orderMapper.insertSelective(order);
