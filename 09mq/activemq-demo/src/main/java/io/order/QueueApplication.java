@@ -1,6 +1,4 @@
-package io.byk.queue.order;
-
-import java.util.Queue;
+package io.order;
 
 import javax.annotation.Resource;
 
@@ -9,11 +7,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.google.common.collect.Lists;
-
-import io.byk.queue.order.entity.Order;
-import io.byk.queue.order.service.QueueConsumer;
-import io.byk.queue.order.service.QueueProducer;
+import io.order.service.QueueConsumer;
+import io.order.service.QueueProducer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootApplication
 @Slf4j
 public class QueueApplication implements ApplicationRunner {
-    private static final Queue<Order> orderQueue = Lists.newLinkedList();
-
     @Resource
     QueueProducer queueProducer;
 
@@ -39,14 +32,16 @@ public class QueueApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 10; i++) {
-            log.info(queueProducer.sendMessage(orderQueue) + "<=======入队");
+        for (int i = 1; i <= 10; i++) {
+            log.info(queueProducer.sendMessage() + "<=======入队");
         }
         while (true) {
             try {
-                log.info(queueConsumer.receiveMessage(orderQueue) + "=======>出队");
+                queueConsumer.receiveMessage();
                 Thread.sleep(100);
-            } catch (IllegalStateException exception) {
+            } catch (IllegalAccessException exception) {
+                log.info(exception.getMessage());
+            } catch (IllegalStateException exception){
                 log.info(exception.getMessage());
                 break;
             }
