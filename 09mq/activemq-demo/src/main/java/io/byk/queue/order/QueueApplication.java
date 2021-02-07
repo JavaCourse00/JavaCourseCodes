@@ -1,6 +1,5 @@
 package io.byk.queue.order;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
 import javax.annotation.Resource;
@@ -12,20 +11,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.google.common.collect.Lists;
 
-import io.byk.activemq.jms.JmsActiveMqApplication;
 import io.byk.queue.order.entity.Order;
 import io.byk.queue.order.service.QueueConsumer;
 import io.byk.queue.order.service.QueueProducer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 启动类
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-05
  */
 @SpringBootApplication
 @Slf4j
 public class QueueApplication implements ApplicationRunner {
-    private final static Queue<Order> orderQueue = Lists.newLinkedList();
+    private static final Queue<Order> orderQueue = Lists.newLinkedList();
 
     @Resource
     QueueProducer queueProducer;

@@ -1,6 +1,5 @@
 package io.byk.queue.order.service;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -10,6 +9,8 @@ import io.byk.queue.order.entity.Order;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 队列消费者
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-05
  */
@@ -21,8 +22,7 @@ public class QueueConsumer {
         if (Objects.isNull(orderQueue)) {
             throw new IllegalAccessException("订单队列不存在");
         }
-        boolean isOrderQueueEmpty = orderQueue.size() == 0;
-        if (isOrderQueueEmpty) {
+        if (orderQueue.isEmpty()) {
             throw new IllegalStateException("订单队列为空");
         }
         // STEP 2: 校验订单

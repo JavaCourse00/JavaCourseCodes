@@ -12,6 +12,8 @@ import io.byk.queue.order.entity.Order;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 队列生产者
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-05
  */
