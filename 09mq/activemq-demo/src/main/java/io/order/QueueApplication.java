@@ -1,9 +1,5 @@
 package io.order;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javax.annotation.Resource;
 
 import org.springframework.boot.ApplicationArguments;
@@ -35,7 +31,7 @@ public class QueueApplication implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         for (int i = 0; i < 100; i++) {
             log.info(queueProducer.sendMessage(String.valueOf(i)) + "<=======入队");
         }

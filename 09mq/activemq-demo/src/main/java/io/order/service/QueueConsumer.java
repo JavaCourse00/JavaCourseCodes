@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.Resource;
 
@@ -42,7 +41,10 @@ public class QueueConsumer {
                 executorService.submit(() -> {
                     try {
                         // 重试策略
-                        retryBuss(order);
+                        int success = retryBuss(order);
+                        if (success <= 0) {
+                            log.info("订单" + order.getOrderId() + "=======>出队失败");
+                        }
                     } catch (InterruptedException exception) {
                         log.info("进程被打断");
                         Thread.currentThread().interrupt();
@@ -52,14 +54,14 @@ public class QueueConsumer {
         }
     }
 
-    private void retryBuss(Order order) throws InterruptedException {
+    private int retryBuss(Order order) throws InterruptedException {
         int retryNum = 1;
         while (retryNum <= TRY_TIMES) {
             try {
                 // 加锁解决并发，效率降低
                 int success = updateOrder(order);
                 if (success > 0L) {
-                    break;
+                    return 1;
                 }
                 retryNum++;
             } catch (Exception e) {
@@ -68,6 +70,7 @@ public class QueueConsumer {
                 continue;
             }
         }
+        return 0;
     }
 
     private synchronized int updateOrder(Order order) throws IllegalAccessException, InterruptedException {

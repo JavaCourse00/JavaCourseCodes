@@ -1,7 +1,5 @@
 package io.order.service;
 
-import java.util.UUID;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class QueueProducer {
     @Resource
     OrderMapper orderMapper;
 
-    public String sendMessage(String orderId) throws IllegalAccessException {
+    public String sendMessage(String orderId) {
         // STEP 1: 生成订单
         Order order = new Order(0, orderId, 0);
         // STEP 2: 发送订单消息

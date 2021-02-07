@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
+ * 订单表
+ *
  * @author boyunkai <boyunkai@kuaishou.com>
  * Created on 2021-02-07
- */
-
-/**
- * 订单表
  */
 @Data
 @AllArgsConstructor
