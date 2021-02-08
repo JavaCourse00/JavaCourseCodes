@@ -23,6 +23,8 @@ mybatis:
 
 建议不要在创建表的过程中使用mysql保留字，避免后期造成麻烦
 
+### 3.[（选做）将上述订单处理场景，改成使用 ActiveMQ 发送消息处理模式。](src/main/java/io/byk/queue/order)
+
 #### ActiveMQ序列化异常Forbidden class ! This class is not trusted to be serialized as ObjectMessage payload
 
 在`application.yml`文件下添加配置信息：
@@ -38,4 +40,3 @@ spring:
     packages:
       trust-all: true
 ```
-
