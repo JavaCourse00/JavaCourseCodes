@@ -1,10 +1,19 @@
 package io.kimmking.java8;
 
-import lombok.Data;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Slf4j
+@Builder
+@Getter
+@Setter
 public class A {
-    
+
     private int age;
-    
+
+    private String name;
+
 }

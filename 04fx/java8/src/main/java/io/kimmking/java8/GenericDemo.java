@@ -1,9 +1,10 @@
 package io.kimmking.java8;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public class GenericDemo {
+public class GenericDemo implements Serializable {
     public static void main(String[] args) {
         Demo demo = new Demo();
         Class clazz = demo.getClass();
@@ -20,7 +21,7 @@ public class GenericDemo {
         System.out.println(c);
     }
     
-    public static class Person<T> {
+    public static class Person<T extends Serializable> {
         
     }
     

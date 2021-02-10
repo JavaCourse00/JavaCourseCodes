@@ -18,7 +18,7 @@ spring:
     enabled: true
     max-connections: 10   #连接池最大连接数
     idle-timeout: 30000   #空闲的连接过期时间，默认为30秒
-    
+
     
     
   data:
