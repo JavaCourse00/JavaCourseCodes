@@ -18,9 +18,8 @@
 
 注意：如果没有线上系统，可以自己 run 一个 web/java 项目。
 
-> Week01 作业题目:
+5.（选做）本机使用 G1 GC 启动一个程序，仿照课上案例分析一下 JVM 情况。
 
-1.（选做）本机使用 G1 GC 启动一个程序，仿照课上案例分析一下 JVM 情况。
 
 
 ## 操作步骤
@@ -97,3 +96,17 @@ JAVA_OPTS=-Xmx4g -Xms4g -XX:+UseG1GC -XX:MaxGCPauseMillis=50
 - 吞吐量:  根据业务特征来确定, 比如, 网关, 大数据底层平台, 批处理作业系统, 在线实时应用, 他们最重要的需求不一样。
 - 系统架构: 比如拆分为小内存更多节点, 还是大内存少量节点。
 - 其他...
+
+
+### 5.（选做）
+
+例如使用以下命令:
+
+```
+# 编译
+javac -g GCLogAnalysis.java
+# JDK8 启动程序
+java -Xmx2g -Xms2g -XX:+UseG1GC -verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:gc.log  GCLogAnalysis
+```
+
+尝试使用课程中介绍的各种工具JDK命令行和图形工具来进行分析。
