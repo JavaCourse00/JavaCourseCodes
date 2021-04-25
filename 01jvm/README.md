@@ -110,3 +110,5 @@ java -Xmx2g -Xms2g -XX:+UseG1GC -verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCD
 ```
 
 尝试使用课程中介绍的各种工具JDK命令行和图形工具来进行分析。
+
+其中 [GCLogAnalysis.java](./GCLogAnalysis.java) 文件也可以从课件资料zip中找到.
