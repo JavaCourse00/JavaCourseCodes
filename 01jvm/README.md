@@ -72,3 +72,28 @@ JVM进程空间中的内存一般来说包括以下这些部分:
 - 栈内存 = n * Xss
 
 另外，注意区分规范与实现的区别, 需要根据具体实现以及版本, 才能确定。 一般来说，我们的目的是为了排查故障和诊断问题，大致弄清楚这些参数和空间的关系即可。 具体设置时还需要留一些冗余量。
+
+
+### 4.（选做）
+
+这个是具体案例分析, 请各位同学自己分析。
+
+比如我们一个生产系统应用的启动参数为:
+
+```
+JAVA_OPTS=-Xmx200g -Xms200g -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:ZCollectionInterval=30 -XX:ZAllocationSpikeTolerance=5 -XX:ReservedCodeCacheSize=2g -XX:InitialCodeCacheSize=2g -XX:ConcGCThreads=8 -XX:ParallelGCThreads=16
+```
+
+另一个系统的启动参数为:
+
+```
+JAVA_OPTS=-Xmx4g -Xms4g -XX:+UseG1GC -XX:MaxGCPauseMillis=50
+```
+
+具体如何设置, 需要考虑的因素包括:
+
+- 系统容量: 业务规模, 并发, 成本预算; 需要兼顾性能与成本;
+- 延迟要求: 最坏情况下能接受多少时间的延迟尖刺。
+- 吞吐量:  根据业务特征来确定, 比如, 网关, 大数据底层平台, 批处理作业系统, 在线实时应用, 他们最重要的需求不一样。
+- 系统架构: 比如拆分为小内存更多节点, 还是大内存少量节点。
+- 其他...
