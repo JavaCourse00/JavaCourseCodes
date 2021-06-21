@@ -17,9 +17,16 @@ public class StreamDemo {
         Optional<Integer> first = list.stream().findFirst();
 
         System.out.println(first.map(i -> i * 100).orElse(100));
-        
+
+        //1,2,3
+        // 0, 1, 2, 3
         int sum = list.stream().filter( i -> i<4).distinct().reduce(0,(a,b)->a+b);
         System.out.println("sum="+sum);
+
+        //1,2,3
+        // 1, 1, 2, 3
+        int multi = list.stream().filter( i -> i<4).distinct().reduce(1,(a,b)->a*b);
+        System.out.println("multi="+multi);
         
         //Map map1 = list.stream().collect(Collectors.toMap(a->a,a->(a+1)));
         Map<Integer,Integer> map = list.stream().parallel().collect(Collectors.toMap(a->a,a->(a+1),(a,b)->a, LinkedHashMap::new));

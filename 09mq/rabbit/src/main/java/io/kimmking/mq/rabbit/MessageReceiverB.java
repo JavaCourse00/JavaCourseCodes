@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(queues = RabbitConfig.QUEUE_B)
 @Slf4j
-public class MsgReceiverB {
+public class MessageReceiverB {
 
     @RabbitHandler
     public void process(String content) {

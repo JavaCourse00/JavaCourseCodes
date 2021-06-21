@@ -10,8 +10,7 @@ public class RedissionDemo1 {
 
     public static void main(String[] args) {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6380");
-        //config.useSingleServer().setPassword("");
+        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
 
         final RedissonClient client = Redisson.create(config);
         RLock lock = client.getLock("lock1");
@@ -22,7 +21,7 @@ public class RedissionDemo1 {
             RMap<String, String> rmap = client.getMap("map1");
 
             for (int i = 0; i < 15; i++) {
-                rmap.put("rkey:"+i, "rvalue:1-"+i);
+                rmap.put("rkey:"+i, "rvalue:22222-"+i);
             }
 
             System.out.println(rmap.get("rkey:10"));

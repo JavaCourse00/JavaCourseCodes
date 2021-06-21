@@ -10,9 +10,14 @@ public class LombokDemo {
 
     public static void main(String[] args) throws IOException {
 
+        // Spring IoC
+        // ServiceLoader.load  SPI
+        // Listener/Callback
+        // EventBus
+
         A a = new A(1, "KK");
         System.out.println(a.toString());
-        A.builder().age(1).name("KKK").build();
+        A b = A.builder().age(1).name("KKK").build();
 
         new LombokDemo().demo();
         

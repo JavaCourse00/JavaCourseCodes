@@ -25,14 +25,14 @@ public class Student implements Serializable, BeanNameAware, ApplicationContextA
 
     private String beanName;
     private ApplicationContext applicationContext;
-    
+
     public void init(){
         System.out.println("hello...........");
     }
     
-//    public Student create(){
-//        return new Student(101,"KK101");
-//    }
+    public static Student create(){
+        return new Student(102,"KK102",null, null);
+    }
 
     public void print() {
         System.out.println(this.beanName);

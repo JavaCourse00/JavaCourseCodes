@@ -40,7 +40,14 @@ public class SpringDemo01 {
         class1.dong();
     
         System.out.println("   context.getBeanDefinitionNames() ===>> "+ String.join(",", context.getBeanDefinitionNames()));
-        
 
+        Student s101 = (Student) context.getBean("s101");
+        if (s101 != null) {
+            System.out.println(s101);
+        }
+        Student s102 = (Student) context.getBean("s102");
+        if (s102 != null) {
+            System.out.println(s102);
+        }
     }
 }

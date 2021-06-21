@@ -14,7 +14,7 @@ public class HelloBeanPostProcessor implements BeanPostProcessor {
         // 例如
         if (bean instanceof Student) {
             Student student = (Student) bean;
-            student.setName(student.getName() + System.currentTimeMillis());
+            student.setName(student.getName() + "-" + System.currentTimeMillis());
         }
         return bean;
     }

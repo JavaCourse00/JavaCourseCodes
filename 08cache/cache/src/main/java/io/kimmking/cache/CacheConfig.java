@@ -36,7 +36,7 @@ public class CacheConfig extends CachingConfigurerSupport {
             sb.append(o.getClass().getName()).append(".");
             sb.append(method.getName()).append(".");
             for (Object obj : objects) {
-                sb.append(obj.toString());
+                sb.append(obj.toString()).append(".");
             }
             //System.out.println("keyGenerator=" + sb.toString());
             return sb.toString();

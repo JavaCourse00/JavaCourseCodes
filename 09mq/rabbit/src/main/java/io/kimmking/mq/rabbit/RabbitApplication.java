@@ -14,13 +14,13 @@ public class RabbitApplication {
     }
 
     @Autowired
-    MsgProducer producer;
+    MessageProducer producer;
 
     @Bean
     ApplicationRunner run() {
         return args -> {
             for (int i = 0; i < 1000; i++) {
-                producer.sendMsg(i+" message.");
+                producer.sendMessage(i+" message by cuicuilaoshi.");
             }
         };
     }

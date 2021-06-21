@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class StringConsumerDemo implements RocketMQListener<String> {
 
     @Override
-    public void onMessage(String message) {
+    public void onMessage(String message) { // one way
         System.out.println(this.getClass().getName() + " -> " + message);
     }
 }

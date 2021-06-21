@@ -62,7 +62,7 @@ public class ActivemqApplication {
                 producer.send(message);
             }
 
-            Thread.sleep(2000);
+            Thread.sleep(20000);
             session.close();
             conn.close();
 

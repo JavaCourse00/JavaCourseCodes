@@ -4,7 +4,7 @@ package java0.conc0302.threadpool;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class NewFixedThreadExecutorDemo {
+public class NewFixedThreadPoolDemo {
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newFixedThreadPool(16);

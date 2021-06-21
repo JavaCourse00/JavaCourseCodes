@@ -21,7 +21,6 @@ public class HttpServer01 {
     
     private static void service(Socket socket) {
         try {
-//            Thread.sleep(5);
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println("HTTP/1.1 200 OK");
             printWriter.println("Content-Type:text/html;charset=utf-8");
@@ -31,7 +30,7 @@ public class HttpServer01 {
             printWriter.write(body);
             printWriter.close();
             socket.close();
-        } catch (IOException e) { // | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

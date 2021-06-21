@@ -1,5 +1,6 @@
 package io.kimmking.mq.rocket;
 
+import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQReplyListener;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class OrderConsumerDemo implements RocketMQReplyListener<Order,String> {
 
     @Override
-    public String onMessage(Order order) {
+    public String onMessage(Order order) { // request-response
         System.out.println(this.getClass().getName() + " -> " + order);
         return "Process&Return [" + order + "].";
     }

@@ -27,7 +27,7 @@ public class PulsarApplication {
                 consumer.consume();
             }).start();
 
-            producer.sendMsg();
+            producer.sendMessage();
 
         };
     }

@@ -37,18 +37,22 @@ public class RocketApplication implements CommandLineRunner {
         System.out.printf("syncSend1 to topic %s sendResult=%s %n", topic, sendResult);
 
         String topic1 = "test-k2";
-        rocketMQTemplate.asyncSend(topic1, new Order(System.currentTimeMillis(),"CNY2USD", 0.1502d), new SendCallback() {
-            @Override
-            public void onSuccess(SendResult result) {
-                System.out.printf("async onSucess SendResult=%s %n", result);
-            }
 
-            @Override
-            public void onException(Throwable throwable) {
-                System.out.printf("async onException Throwable=%s %n", throwable);
-            }
+        String result = rocketMQTemplate.sendAndReceive(topic1, new Order(System.currentTimeMillis(),"CNY2USD", 0.1502d), String.class);
+        System.out.println(" consumer result => " + result);
 
-        });
+//        rocketMQTemplate.asyncSend(topic1, new Order(System.currentTimeMillis(),"CNY2USD", 0.1502d), new SendCallback() {
+//            @Override
+//            public void onSuccess(SendResult result) {
+//                System.out.printf("async onSucess SendResult=%s %n", result);
+//            }
+//
+//            @Override
+//            public void onException(Throwable throwable) {
+//                System.out.printf("async onException Throwable=%s %n", throwable);
+//            }
+//
+//        });
 
 
     }

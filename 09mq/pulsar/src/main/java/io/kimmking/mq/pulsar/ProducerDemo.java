@@ -17,7 +17,7 @@ public class ProducerDemo {
     }
 
     @SneakyThrows
-    public void sendMsg() {
+    public void sendMessage() {
         for (int i = 0; i < 1000; i++) {
             stringProducer.send(i + " message from pulsar.");
         }

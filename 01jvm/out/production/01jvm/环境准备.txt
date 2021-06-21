@@ -1,0 +1,38 @@
+
+
+## Windows
+
+1.管理员身份打开powershell
+
+2.运行
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+3.执行choco install superbenchmarker
+
+4.输入 sb
+
+执行 sb -u http://localhost:8088/api/hello -c 20 -N 60
+
+## Mac
+
+1.执行brew install wrk
+如果显式brew update很慢，可以ctrl+C打断更新
+
+2.输入 wrk
+
+执行 wrk -t8 -c40 -d60s http://localhost:8088/api/hello
+
+## 压测程序
+
+1.可以从github获取
+git clone https://github.com/kimmking/atlantis
+cd atlantis\gateway-server
+mvn clean package
+然后在target目录可以找到gateway-server-0.0.1-SNAPSHOT.jar
+
+2.也可以从此处下载已经编译好的：
+链接：https://pan.baidu.com/s/1NbpYX4M3YKLYM1JJeIzgSQ 
+提取码：sp85 
+
+java -jar -Xmx512m -Xms512 gateway-server-0.0.1-SNAPSHOT.jar
+

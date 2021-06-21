@@ -12,7 +12,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserMapper userMapper;
+    UserMapper userMapper; //DAO  // Repository
 
     // 开启spring cache
     @Cacheable(key="#id",value="userCache")

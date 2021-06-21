@@ -14,13 +14,12 @@ public class CopyOnWriteArrayListDemo {
         // why Vector 也不安全
 //        List<Integer> list = new ArrayList<Integer>();
 //        List<Integer> list = new LinkedList<>();
-        List<Integer> list = new Vector<>();
+//        List<Integer> list = new Vector<>();
     
         // 只有CopyOnWriteArrayList 安全，不报错
-        //List<Integer> list = new CopyOnWriteArrayList();
+        List<Integer> list = new CopyOnWriteArrayList();
         
-        for (int i = 0; i < 10000; i++)
-        {
+        for (int i = 0; i < 10000; i++) {
             list.add(i);
         }
     
@@ -31,8 +30,7 @@ public class CopyOnWriteArrayListDemo {
         
     }
     
-    public static class T1 extends Thread
-    {
+    public static class T1 extends Thread {
         private List<Integer> list;
         
         public T1(List<Integer> list)
@@ -40,16 +38,13 @@ public class CopyOnWriteArrayListDemo {
             this.list = list;
         }
         
-        public void run()
-        {
-            for (Integer i : list)
-            {
+        public void run() {
+            for (Integer i : list) {
             }
         }
     }
     
-    public static class T2 extends Thread
-    {
+    public static class T2 extends Thread {
         private List<Integer> list;
         
         public T2(List<Integer> list)
@@ -57,10 +52,8 @@ public class CopyOnWriteArrayListDemo {
             this.list = list;
         }
         
-        public void run()
-        {
-            for (int i = 0; i < list.size(); i++)
-            {
+        public void run() {
+            for (int i = 0; i < list.size(); i++) {
                 list.remove(i);
             }
         }

@@ -1,7 +1,6 @@
 package io.kimmking.javacourse.kafka;
 
 import io.kimmking.javacourse.kafka.kimmking.ConsumerImpl;
-import io.kimmking.javacourse.kafka.kimmking.ProducerImpl;
 
 public class KafkaConsumerDemo {
 

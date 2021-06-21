@@ -10,9 +10,8 @@ import java.util.concurrent.Executors;
 // 创建了一个固定大小的线程池处理请求
 public class HttpServer03 {
     public static void main(String[] args) throws IOException{
-
         ExecutorService executorService = Executors.newFixedThreadPool(
-                Runtime.getRuntime().availableProcessors() + 2);
+                Runtime.getRuntime().availableProcessors() * 4);
         final ServerSocket serverSocket = new ServerSocket(8803);
         while (true) {
             try {
@@ -26,17 +25,16 @@ public class HttpServer03 {
     
     private static void service(Socket socket) {
         try {
-//            Thread.sleep(5);
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream(), true);
             printWriter.println("HTTP/1.1 200 OK");
             printWriter.println("Content-Type:text/html;charset=utf-8");
-            String body = "hello,nio";
+            String body = "hello,nio3";
             printWriter.println("Content-Length:" + body.getBytes().length);
             printWriter.println();
             printWriter.write(body);
             printWriter.close();
             socket.close();
-        } catch (IOException e) { // | InterruptedException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

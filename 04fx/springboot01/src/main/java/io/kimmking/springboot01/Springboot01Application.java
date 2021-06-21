@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.jms.annotation.EnableJms;
 
 @SpringBootApplication
-@EnableJms    //启动消息队列
-@EnableMongoRepositories
+//@EnableJms    //启动消息队列
+//@EnableMongoRepositories
 public class Springboot01Application {
 
 	public static void main(String[] args) {

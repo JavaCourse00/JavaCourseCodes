@@ -18,19 +18,19 @@ public class Aop2 {
     
     @Before(value="point()")
     public void before(){
-        System.out.println("========>begin klass dong...");
+        System.out.println("========>begin klass dong... //2");
     }
     
     @AfterReturning(value = "point()")
     public void after(){
-        System.out.println("========>after klass dong...");
+        System.out.println("========>after klass dong... //4");
     }
     
     @Around("point()")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable{
-        System.out.println("========>around begin klass dong");
+        System.out.println("========>around begin klass dong //1");
         joinPoint.proceed();
-        System.out.println("========>around after klass dong");
+        System.out.println("========>around after klass dong //3");
         
     }
     

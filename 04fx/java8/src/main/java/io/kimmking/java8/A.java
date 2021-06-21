@@ -16,4 +16,9 @@ public class A {
 
     private String name;
 
+//    public void test(){
+//        log.info("this message is logged by lombok");
+//        System.out.println(this.toString());
+//    }
+
 }

@@ -79,7 +79,7 @@ public class GuavaDemo {
         // SPI+service loader
         // Callback/Listener
         // 
-        Student student2 = new Student(2, "KK02", null, null);
+        Student student2 = Student.create();
         System.out.println("I want " + student2 + " run now.");
         bus.post(new AEvent(student2));
         
