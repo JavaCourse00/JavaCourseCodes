@@ -34,5 +34,5 @@ mvn clean package
 链接：https://pan.baidu.com/s/1NbpYX4M3YKLYM1JJeIzgSQ 
 提取码：sp85 
 
-java -jar -Xmx512m -Xms512 gateway-server-0.0.1-SNAPSHOT.jar
+java -jar -Xmx512m -Xms512m gateway-server-0.0.1-SNAPSHOT.jar
 
