@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <context id="context" targetRuntime="MyBatis3">
+        <!-- 生成的 Java 文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化 Java 代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化 XML 代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <commentGenerator>
+            <!-- 注释生成器: 不生成日期; 增加字段备注信息; -->
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 配置数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:13306/mysql_demo?useUnicode=true&amp;characterEncoding=UTF-8&amp;useInformationSchema=true"
+                        userId="root"
+                        password="123456"/>
+
+        <!-- 生成实体的位置 -->
+        <javaModelGenerator targetPackage="com.cncounter.mysqldemo.model"
+                            targetProject="./src/main/java"/>
+        <!-- 生成 Mapper XML 的位置 -->
+        <sqlMapGenerator targetPackage="com.cncounter.mysqldemo.dao.mapper"
+                         targetProject="./src/main/resources"/>
+        <!-- 生成 Mapper 接口的位置 -->
+        <javaClientGenerator targetPackage="com.cncounter.mysqldemo.dao.mapper"
+                             targetProject="./src/main/java" type="XMLMAPPER"/>
+
+        <!-- 设置数据库的表名和实体类名; -->
+        <!-- 如果有N个表要生成, 则写N个table标签 -->
+        <table schema="MYSQL_DEMO" tableName="t_biz_order" domainObjectName="TBizOrder"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+            <!-- generatedKey用于生成生成主键的方法 -->
+            <generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true"/>
+            <!-- 如果对默认生成的字段类型不满意; 可以手工指定 -->
+            <columnOverride column="state" javaType="java.lang.Integer" jdbcType="TINYINT"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

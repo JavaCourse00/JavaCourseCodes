@@ -70,3 +70,8 @@
 8. 生成项目;
   - 8.1 创建Controller
 9. 执行与测试.
+
+参考: [mysql-demo/README.md](./mysql-demo/README.md)
+
+
+https://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
