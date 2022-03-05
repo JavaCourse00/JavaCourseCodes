@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.github.kimmking.javacourse.dfs.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="io.github.kimmking.javacourse.dfs.model.User">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="pic_path" jdbcType="VARCHAR" property="picPath" />
+    </resultMap>
+
+    <select id="findById" resultMap="BaseResultMap">
+        select * from user where id = #{id}
+    </select>
+
+    <insert id="create">
+        insert into user(id,name,pic_path) values(#{id},#{name},#{picPath});
+    </insert>
+
+</mapper>
