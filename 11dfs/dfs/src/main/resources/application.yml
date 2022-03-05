@@ -1,0 +1,32 @@
+server:
+  port: 8011
+#  tomcat:
+#    basedir: app
+
+spring:
+#  mvc:
+#    static-path-pattern: /**
+#  web:
+#    resources:
+#      static-locations: file:/Users/kimmking/kimmking/JavaCourseCodes/11dfs/dfs/pic/
+#  #    ## classpath:/META-INF/static/,classpath:/META-INF/public/,classpath:/META-INF/resources/,
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=Asia/Shanghai&useServerPrepStmts=true&cachePrepStmts=true
+    username: root
+    password:
+    druid:
+      initial-size: 5
+      max-active: 5
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+logging:
+  level:
+    root: info
+
+fdfs:
+  so-timeout: 3000
+  connect-timeout: 1000
+  tracker-list:
+    - 62.234.122.77:22122

@@ -24,6 +24,7 @@ hs_err_pid*
 *.iml
 *.idea/
 
+out/
 classes/
 target/
 build/

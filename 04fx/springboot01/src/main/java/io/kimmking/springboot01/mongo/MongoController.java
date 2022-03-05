@@ -15,10 +15,10 @@ import java.util.List;
 @Controller
 @EnableAutoConfiguration
 public class MongoController {
-    
+
     @Autowired
     MongoTemplate mongoTemplate;
-    
+
     @RequestMapping("/mongo/list")
     @ResponseBody
     List<User> mongo() {
@@ -27,7 +27,7 @@ public class MongoController {
         //String name = mongotemplate.findOne(query, User.class).getName();
         return mongoTemplate.findAll(User.class);
     }
-    
+
     @RequestMapping("/mongo/test")
     @ResponseBody
     String test() {
@@ -41,6 +41,6 @@ public class MongoController {
         mongoTemplate.insert(user);
         return "test ok";
     }
-    
-    
+
+
 }
