@@ -1,0 +1,50 @@
+# Tomcat 配置
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 10
+  servlet:
+    context-path: /
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+
+# MyBatis 配置
+mybatis:
+  config-locations: classpath:mybatis-configuration.xml
+  mapper-locations: classpath:com/cncounter/mysqldemo/dao/mapper/*.xml
+  type-handlers-package: com.cncounter.mysqldemo.dao.mybatis.handlers.auto
+  configuration:
+    cache-enabled: false
+    lazy-loading-enabled: false
+    use-generated-keys: true
+    auto-mapping-behavior: full
+    default-executor-type: REUSE
+    default-statement-timeout: 20000
+
+# Spring相关配置
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: MySQLHikariCP1
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/mysql_demo?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456
+
+#  Logback日志级别配置
+logging.level.root: info
+logging.level.com.cncounter: debug
+logging.level.org.springframework.test.web.servlet.result: debug
+
