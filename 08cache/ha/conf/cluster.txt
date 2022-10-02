@@ -1,0 +1,61 @@
+redis-server --port $PORT --cluster-enabled yes --cluster-config-file nodes-${PORT}.conf --cluster-node-timeout $TIMEOUT --appendonly yes --appendfilename appendonly-${PORT}.aof --dbfilename dump-${PORT}.rdb --logfile ${PORT}.log --daemonize yes
+
+redis-server --port 7004 --cluster-enabled yes --cluster-config-file nodes-7004.conf --cluster-node-timeout 3000 --appendonly yes --appendfilename appendonly-7004.aof --dbfilename dump-7004.rdb --logfile 7004.log --daemonize yes
+
+
+redis-cli --cluster create $HOSTS --cluster-replicas $REPLICAS
+
+
+redis-cli -p $PORT shutdown nosave
+
+redis-cli -p $PORT cluster nodes | head -30
+
+redis-cli -p $PORT $2 $3 $4 $5 $6 $7 $8 $9
+
+
+
+redis-cli -p 7000 cluster info 
+
+
+测试存取值，客户端连接集群redis-cli需要带上 -c ，redis-cli -c -p 端口号
+
+
+
+
+Redis 集群使用命令 CLUSTER SETSLOT 将一个槽中的所有 keys 从一个节点迁移至另一个节点。稍后介绍在其他命令配合下迁移是如何操作的。我们假定要操作的哈希槽的当前所有者为源节点，将要迁移至的节点为目的节点。
+
+使用命令 CLUSTER SETSLOT <slot> IMPORTING <source-node-id> 将目的节点槽置为 importing 状态。
+使用命令 CLUSTER SETSLOT <slot> MIGRATING <destination-node-id> 将源节点槽置为 migrating 状态。
+使用命令 CLUSTER GETKEYSINSLOT 从源节点获取所有 keys，并使用命令 MIGRATE 将它们导入到目的节点。
+在源节点活目的节点执行命令 CLUSTER SETSLOT <slot> NODE <destination-node-id>。
+注意：
+
+步骤 1 和步骤 2 的顺序很重要。我们希望在源节点配置了重定向之后，目的节点已经可以接受 ASK 重定向。
+步骤 4 中，技术上讲，在重哈希不涉及的节点上执行 SETSLOT 是非必须的，因为新配置最终会分发到所有节点上，但是，这样操作也有好处，会快速停止节点中对已迁移的哈希槽的错误指向，降低命令重定向的发生。
+
+https://www.knowledgedict.com/tutorial/redis-command-cluster-setslot.html
+
+
+k2:
+CLUSTER SETSLOT 449 importing c025732be5696d0446aad624dba3c31e13750341
+CLUSTER SETSLOT 449  migrating 2cf0fb991563bdedea2704a3cd43e5c211ea16b9
+CLUSTER COUNTKEYSINSLOT 449
+CLUSTER GETKEYSINSLOT 449 10
+MIGRATE 127.0.0.1 7004 k2 0 100 COPY 
+CLUSTER SETSLOT 449  node 2cf0fb991563bdedea2704a3cd43e5c211ea16b9  // 这句没有执行完之前，获取key会死循环
+
+k6:
+CLUSTER SETSLOT 325  node 2cf0fb991563bdedea2704a3cd43e5c211ea16b9
+
+
+
+几个问题：
+1、添加新节点后slot为空，需要从其他节点迁移slot，然后迁移key，一个个的处理，处理完后通知集群这个slot在新节点上方可使用，中间访问会重定向死循环。
+2、分片+主从？
+3、
+
+
+解决办法：使用批量操作脚本来做。
+提供 reshard 一键重新分配数据的功能。
+
+

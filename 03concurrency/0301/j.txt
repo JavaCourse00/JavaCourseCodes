@@ -1,0 +1,130 @@
+2022-06-09 15:15:13
+Full thread dump OpenJDK 64-Bit Server VM (25.275-b00 mixed mode):
+
+"Attach Listener" #12 daemon prio=9 os_prio=31 tid=0x00007f90df895000 nid=0xa703 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"Thread-0" #11 prio=5 os_prio=31 tid=0x00007f90e105d800 nid=0x5603 waiting for monitor entry [0x0000700005164000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at java0.conc0301.sync.TestSetGet$SetGet.get(TestSetGet.java:50)
+	- waiting to lock <0x000000076ac2ed68> (a java0.conc0301.sync.TestSetGet$SetGet)
+	at java0.conc0301.sync.TestSetGet$1.run(TestSetGet.java:14)
+
+   Locked ownable synchronizers:
+	- None
+
+"Service Thread" #10 daemon prio=9 os_prio=31 tid=0x00007f90e1051800 nid=0x3d03 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C1 CompilerThread3" #9 daemon prio=9 os_prio=31 tid=0x00007f90e4808800 nid=0x3c03 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C2 CompilerThread2" #8 daemon prio=9 os_prio=31 tid=0x00007f90e1026000 nid=0x3b03 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C2 CompilerThread1" #7 daemon prio=9 os_prio=31 tid=0x00007f90df872000 nid=0x3903 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C2 CompilerThread0" #6 daemon prio=9 os_prio=31 tid=0x00007f90df871000 nid=0x3803 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"Monitor Ctrl-Break" #5 daemon prio=5 os_prio=31 tid=0x00007f90df86d800 nid=0x4203 runnable [0x0000700004a4f000]
+   java.lang.Thread.State: RUNNABLE
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	- locked <0x000000076ac7c0d0> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.fill(BufferedReader.java:161)
+	at java.io.BufferedReader.readLine(BufferedReader.java:324)
+	- locked <0x000000076ac7c0d0> (a java.io.InputStreamReader)
+	at java.io.BufferedReader.readLine(BufferedReader.java:389)
+	at com.intellij.rt.execution.application.AppMainV2$1.run(AppMainV2.java:49)
+
+   Locked ownable synchronizers:
+	- None
+
+"Signal Dispatcher" #4 daemon prio=9 os_prio=31 tid=0x00007f90e3808800 nid=0x4403 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"Finalizer" #3 daemon prio=8 os_prio=31 tid=0x00007f90df056800 nid=0x4d03 in Object.wait() [0x0000700004743000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x000000076ab08ee0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:144)
+	- locked <0x000000076ab08ee0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:165)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:216)
+
+   Locked ownable synchronizers:
+	- None
+
+"Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007f90df04e000 nid=0x3303 in Object.wait() [0x0000700004640000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x000000076ab06c00> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:502)
+	at java.lang.ref.Reference.tryHandlePending(Reference.java:191)
+	- locked <0x000000076ab06c00> (a java.lang.ref.Reference$Lock)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:153)
+
+   Locked ownable synchronizers:
+	- None
+
+"main" #1 prio=5 os_prio=31 tid=0x00007f90df009000 nid=0x2803 waiting on condition [0x0000700003c22000]
+   java.lang.Thread.State: TIMED_WAITING (sleeping)
+	at java.lang.Thread.sleep(Native Method)
+	at java0.conc0301.sync.TestSetGet$SetGet.set(TestSetGet.java:37)
+	- locked <0x000000076ac2ed68> (a java0.conc0301.sync.TestSetGet$SetGet)
+	at java0.conc0301.sync.TestSetGet.main(TestSetGet.java:22)
+
+   Locked ownable synchronizers:
+	- None
+
+"VM Thread" os_prio=31 tid=0x00007f90df81c000 nid=0x4f03 runnable 
+
+"GC task thread#0 (ParallelGC)" os_prio=31 tid=0x00007f90df016000 nid=0x1d07 runnable 
+
+"GC task thread#1 (ParallelGC)" os_prio=31 tid=0x00007f90df016800 nid=0x1e03 runnable 
+
+"GC task thread#2 (ParallelGC)" os_prio=31 tid=0x00007f90df017800 nid=0x2b03 runnable 
+
+"GC task thread#3 (ParallelGC)" os_prio=31 tid=0x00007f90df018000 nid=0x2d03 runnable 
+
+"GC task thread#4 (ParallelGC)" os_prio=31 tid=0x00007f90df019000 nid=0x2f03 runnable 
+
+"GC task thread#5 (ParallelGC)" os_prio=31 tid=0x00007f90df019800 nid=0x5303 runnable 
+
+"GC task thread#6 (ParallelGC)" os_prio=31 tid=0x00007f90df01a800 nid=0x3003 runnable 
+
+"GC task thread#7 (ParallelGC)" os_prio=31 tid=0x00007f90df01b000 nid=0x3103 runnable 
+
+"VM Periodic Task Thread" os_prio=31 tid=0x00007f90e105a800 nid=0xa903 waiting on condition 
+
+JNI global references: 15
+

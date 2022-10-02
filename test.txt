@@ -1,0 +1,1 @@
+nohup java -XX:+UnlockDiagnosticVMOptions -XX:+AbortVMOnSafepointTimeout -XX:+ShowMessageBoxOnError -Xmx1g -Xms1g -XX:+SafepointTimeout -XX:SafepointTimeoutDelay=100 -Xlog:gc*=trace,heap*=trace,safepoint*=trace,logging*=trace:file=gc-%p-%t.log:pid,utctime,level,tags:filecount=100,filesize=10m -jar gateway-server-0.0.1-SNAPSHOT.jar &
