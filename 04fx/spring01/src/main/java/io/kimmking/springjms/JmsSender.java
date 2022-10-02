@@ -13,7 +13,9 @@ public class JmsSender {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:springjms-sender.xml");
         
         SendService sendService = (SendService)context.getBean("sendService");
-        
+
+        student2.setName("KK103");
+
         sendService.send(student2);
         
         System.out.println("send successfully, please visit http://localhost:8161/admin to see it");

@@ -10,11 +10,23 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
+    timeout: 3000ms
+    database: 0
+    cluster:
+      nodes:
+        - 127.0.0.1:7000
+        - 127.0.0.1:7001
+        - 127.0.0.1:7002
+        - 127.0.0.1:7003
+        - 127.0.0.1:7004
+        - 127.0.0.1:7005
+      max-redirects: 3 # 获取失败 最大重定向次数
     lettuce:
       pool:
-        max-active: 16
-        max-wait: 10ms
+        max-active: 1000  #连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10 # 连接池中的最大空闲连接
+        min-idle: 5 # 连接池中的最小空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
 
 #    type: ehcache
 #    ehcache:

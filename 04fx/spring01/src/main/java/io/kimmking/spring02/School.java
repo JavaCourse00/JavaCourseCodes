@@ -4,7 +4,9 @@ import io.kimmking.aop.ISchool;
 import io.kimmking.spring01.Student;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @Data
@@ -23,5 +25,6 @@ public class School implements ISchool {
         System.out.println("Class1 have " + this.class1.getStudents().size() + " students and one is " + this.student100);
         
     }
+
     
 }
