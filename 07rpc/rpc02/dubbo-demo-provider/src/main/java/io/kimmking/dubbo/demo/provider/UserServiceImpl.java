@@ -9,6 +9,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int id) {
+//        try {
+//            System.out.println(" ==>" + id);
+//            Thread.sleep(1010);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return new User(id, "KK" + System.currentTimeMillis());
     }
 }
