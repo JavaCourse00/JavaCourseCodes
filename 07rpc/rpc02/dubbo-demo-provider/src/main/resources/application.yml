@@ -5,12 +5,14 @@ spring:
   application:
     name: dubbo-demo-provider
 
+
 dubbo:
   scan:
     base-packages: io.kimmking.dubbo.demo.provider
   protocol:
     name: dubbo
     port: 12345
+    payload: 134217728
   registry:
     address: zookeeper://localhost:2181
   metadata-report:
@@ -24,3 +26,6 @@ dubbo:
     qos-port-compatible: 22222
     qos-accept-foreign-ip-compatible: true
     qos-host: localhost
+logging:
+  level:
+    root: debug

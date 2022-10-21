@@ -32,16 +32,16 @@ public class RpcfxServerApplication {
 	public static void main(String[] args) throws Exception {
 
 //		// start zk client
-//		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
-//		CuratorFramework client = CuratorFrameworkFactory.builder().connectString("localhost:2181").namespace("rpcfx").retryPolicy(retryPolicy).build();
-//		client.start();
+		RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
+		CuratorFramework client = CuratorFrameworkFactory.builder().connectString("localhost:2181").namespace("rpcfx").retryPolicy(retryPolicy).build();
+		client.start();
 //
 //
 //		// register service
 //		// xxx "io.kimmking.rpcfx.demo.api.UserService"
 //
-//		String userService = "io.kimking.rpcfx.demo.api.UserService";
-//		registerService(client, userService);
+		String userService = "io.kimking.rpcfx.demo.api.UserService";
+		registerService(client, userService);
 //		String orderService = "io.kimking.rpcfx.demo.api.OrderService";
 //		registerService(client, orderService);
 
@@ -54,7 +54,7 @@ public class RpcfxServerApplication {
 	private static void registerService(CuratorFramework client, String service) throws Exception {
 		ServiceProviderDesc userServiceSesc = ServiceProviderDesc.builder()
 				.host(InetAddress.getLocalHost().getHostAddress())
-				.port(8080).serviceClass(service).build();
+				.port(8081).serviceClass(service).build();
 		// String userServiceSescJson = JSON.toJSONString(userServiceSesc);
 
 		try {
