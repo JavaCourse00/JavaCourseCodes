@@ -8,10 +8,10 @@ public class TestAddUrl {
 
     public static void main(String[] args) throws Exception {
         URLClassLoader classLoader = (URLClassLoader) TestAddUrl.class.getClassLoader();
-        String dir = "/Users/kimmking/Downloads/Hello";
+        String dir = "./lib";
         Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
         method.setAccessible(true);
-        method.invoke(classLoader, new File(dir).toURL());
+        method.invoke(classLoader, new File(dir).getAbsoluteFile().toURL());
 
         Class klass = Class.forName("Hello",true, classLoader);
         Object obj = klass.newInstance();

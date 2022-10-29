@@ -1,4 +1,4 @@
-public class Hello {
+public class HelloNum {
     public static void main(String[] args) {
         int num1 = 1;       // 字面量1;
         double num2 = 2.0D; // 大小写的D都可以

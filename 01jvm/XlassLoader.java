@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 
 /*
  第一周作业:
- 2.（必做）自定义一个 Classloader，加载一个 Hello.xlass 文件，执行 hello 方法，此文件内容是一个 Hello.class 文件所有字节（x=255-x）处理后的文件。文件群里提供。
+ 2.（必做）自定义一个 Classloader，加载一个 lib.Hello.xlass 文件，执行 hello 方法，此文件内容是一个 lib.Hello.class 文件所有字节（x=255-x）处理后的文件。文件群里提供。
  */
 public class XlassLoader extends ClassLoader {
 
     public static void main(String[] args) throws Exception {
         // 相关参数
-        final String className = "Hello";
+        final String className = "lib.Hello";
         final String methodName = "hello";
         // 创建类加载器
         ClassLoader classLoader = new XlassLoader();

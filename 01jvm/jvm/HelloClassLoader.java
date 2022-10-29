@@ -5,7 +5,8 @@ import java.util.Base64;
 public class HelloClassLoader extends ClassLoader {
 
     public static void main(String[] args) throws Exception {
-        new HelloClassLoader().findClass("jvm.Hello").newInstance();
+
+        new HelloClassLoader().findClass("jvm.lib.Hello").newInstance();
     }
 
     @Override
