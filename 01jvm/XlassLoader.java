@@ -11,7 +11,7 @@ public class XlassLoader extends ClassLoader {
 
     public static void main(String[] args) throws Exception {
         // 相关参数
-        final String className = "lib.Hello";
+        final String className = "Hello";
         final String methodName = "hello";
         // 创建类加载器
         ClassLoader classLoader = new XlassLoader();

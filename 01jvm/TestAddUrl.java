@@ -13,7 +13,7 @@ public class TestAddUrl {
         method.setAccessible(true);
         method.invoke(classLoader, new File(dir).getAbsoluteFile().toURL());
 
-        Class klass = Class.forName("Hello",true, classLoader);
+        Class klass = Class.forName("HelloKimmking",true, classLoader);
         Object obj = klass.newInstance();
         Method hello = klass.getDeclaredMethod("hello");
         hello.invoke(obj);
