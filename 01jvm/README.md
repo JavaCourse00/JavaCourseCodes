@@ -8,7 +8,7 @@
 
 > Week01 作业题目：
 
-1.（选做）自己写一个简单的 HelloNum.java，里面需要涉及基本类型，四则运行，if 和 for，然后自己分析一下对应的字节码，有问题群里讨论。
+1.（必做）自己写一个简单的 HelloNum.java，里面需要涉及基本类型，四则运行，if 和 for，然后自己分析一下对应的字节码，有问题群里讨论。
 
 2.（必做）自定义一个 Classloader，加载一个 Hello.xlass 文件，执行 hello 方法，此文件内容是一个 Hello.class 文件所有字节（x=255-x）处理后的文件。文件群里提供。
 
@@ -25,12 +25,12 @@
 ## 操作步骤
 
 
-### 作业1（选做）
+### 作业1（必做）
 
-1. 编写代码, 根据自己的意愿随意编写, 可参考: [HelloNum.java](./Hello.java)
+1. 编写代码, 根据自己的意愿随意编写, 可参考: [HelloNum.java](./HelloNum.java)
 2. 编译代码, 执行命令： `javac -g HelloNum.java`
 3. 查看反编译的代码。
-  - 3.1 可以安装并使用idea的jclasslib插件, 选中 [HelloNum.java](./Hello.java) 文件, 选择 `View --> Show Bytecode With jclasslib` 即可。
+  - 3.1 可以安装并使用idea的jclasslib插件, 选中 [HelloNum.java](./HelloNum.java) 文件, 选择 `View --> Show Bytecode With jclasslib` 即可。
   - 3.2 或者直接通过命令行工具 javap, 执行命令: `javap -v HelloNum.class`
 4. 分析相关的字节码。【此步骤需要各位同学自己进行分析】
 
