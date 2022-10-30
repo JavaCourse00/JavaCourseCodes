@@ -113,6 +113,36 @@ java -Xmx2g -Xms2g -XX:+UseG1GC -verbose:gc -XX:+PrintGCDateStamps -XX:+PrintGCD
 
 其中 [GCLogAnalysis.java](./GCLogAnalysis.java) 文件也可以从课件资料zip中找到.
 
+## 几个命令用法
+### 1、十六进制方式查看文件
+`hexdump -C Hello.class` 
+输出：`00000000  ca fe ba be 00 00 00 34  00 1c 0a 00 06 00 0e 09`
+
+可以看到magic number： `cafe babe`，
+以及`00 00 00 34`，十六进制34=十进制3*16+4=52，这是jdk8，如果是jdk11则是55，十六进制37.
+
+### 2、Base64方式编码文件
+`base64 Hello.class`
+### 3、显示JVM默认参数
+```
+java -XX:+PrintFlagsFinal -version 
+
+java -XX:+PrintFlagsFinal -version | grep -F " Use" | grep -F "GC "
+
+java -XX:+PrintFlagsFinal -version | grep MaxNewSize
+
+```
+
+### 4、切换不同jdk
+```
+jenv shell 1.8
+jenv shell 11
+```
+显示所有jdk
+```
+jenv versions
+```
+
 ## 更多资料
 
 更多中英文的技术文章和参考资料: <https://github.com/cncounter/translation>
