@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
+import java.util.*;
 
 @SpringBootApplication
 public class DemoApplication implements ApplicationRunner {
@@ -32,13 +33,48 @@ public class DemoApplication implements ApplicationRunner {
 
         printUser();
 
+        printListGraph();
+    }
+
+    private void printListGraph() {
+
+        Random random = new Random();
+        List<Integer> list = new ArrayList<>(128);
+        for (int i = 0; i < 128; i++) {
+            list.add(i, random.nextInt(128));
+        }
+
+        try {
+            System.out.println(" ===> GraphLayout.parseInstance(list).toImage(\"list.png\")");
+            GraphLayout.parseInstance(list).toImage("list.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Map<String, Integer> map = new HashMap(256);
+        for (int i = 0; i < 128; i++) {
+            map.put("K" + i, i);
+        }
+
+        try {
+            System.out.println(" ===> GraphLayout.parseInstance(map).toImage(\"map.png\"))");
+            GraphLayout.parseInstance(map).toImage("map.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void printUser() {
+
+        System.out.println(" ===> ClassLayout.parseInstance(user).toPrintable()");
         User user = new User(true, (byte) 65,12345, 8888, 12345678L, 9999999L, "a");
         System.out.println(ClassLayout.parseInstance(user).toPrintable());
 
+        System.out.println(" ===> GraphLayout.parseInstance(user).toPrintable()");
         System.out.println(GraphLayout.parseInstance(user).toPrintable());
+
+        System.out.println(" ===> GraphLayout.parseInstance(user).toFootprint()");
         System.out.println(GraphLayout.parseInstance(user).toFootprint());
 
 //        try {
@@ -46,6 +82,20 @@ public class DemoApplication implements ApplicationRunner {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+        User user1 = new User(false, (byte) 66,12346, 5555, 12345679L, 888888L, "b");
+        Klass klass = new Klass("Klass1", Arrays.asList(user,user1));
+
+        System.out.println(" ===> ClassLayout.parseInstance(klass).toPrintable()");
+        System.out.println(ClassLayout.parseInstance(klass).toPrintable());
+
+        System.out.println(" ===> GraphLayout.parseInstance(klass).toImage(\"klass.png\")");
+        try {
+            GraphLayout.parseInstance(klass,user,user1).toImage("klass.png");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void printObject() {
@@ -81,6 +131,16 @@ public class DemoApplication implements ApplicationRunner {
         private long c;
         private Long d;
         private String s;
+    }
+
+    public static class Klass {
+        private String klassName;
+        private List<User> users;
+
+        public Klass(String klassName, List<User> users) {
+            this.klassName = klassName;
+            this.users = users;
+        }
     }
 
 }
