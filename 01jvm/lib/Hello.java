@@ -4,8 +4,8 @@
 //    static {
 //        System.out.println("Hello Class Initialized!");
 //    }
-//    public static void main(String[] args) {
-//
+//    public void hello() {
+//        System.out.println("Hello class say hello method.");
 //    }
 //
 //}

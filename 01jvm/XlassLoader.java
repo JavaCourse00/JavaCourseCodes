@@ -11,12 +11,13 @@ public class XlassLoader extends ClassLoader {
 
     public static void main(String[] args) throws Exception {
         // 相关参数
+        final String packageName = "lib";
         final String className = "Hello";
         final String methodName = "hello";
         // 创建类加载器
         ClassLoader classLoader = new XlassLoader();
         // 加载相应的类
-        Class<?> clazz = classLoader.loadClass(className);
+        Class<?> clazz = classLoader.loadClass(packageName + "." + className);
         // 看看里面有些什么方法
         for (Method m : clazz.getDeclaredMethods()) {
             System.out.println(clazz.getSimpleName() + "." + m.getName());
