@@ -61,6 +61,9 @@ public class DemoConfigBindingsRegistrar  implements ImportBeanDefinitionRegistr
                 Collections.singleton(resolveSingleBeanName(properties, configClass, registry));
         Map<String, Map<String, Object>> groupProperties = getGroupProperties(properties, beanNames);
         for (String beanName : beanNames) {
+
+            System.out.println("  ==> registerDemoConfigBean:" + beanName);
+
             registerDemoConfigBean(beanName, configClass, registry, groupProperties.get(beanName));
             //registerDubboConfigBindingBeanPostProcessor(prefix, beanName, multiple, registry);
         }

@@ -14,8 +14,10 @@ class DemoApplicationTests {
 	@Test
 	void testDemoConfig() {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-		context.register(TestConfig.class);
+		context.register(DemoApplication.TestDemoConfig.class);
 		context.refresh();
+
+
 
 		System.out.println(Arrays.toString(context.getBeanNamesForType(DemoConfig.class)));
 		assertEquals(3, context.getBeansOfType(DemoConfig.class).size());
@@ -35,12 +37,15 @@ class DemoApplicationTests {
 		assertEquals("d3", demoConfig.getDemoName());
 		assertEquals("demo3", demoConfig.getDemoDesc());
 
-	}
-
-	@EnableDemoConfigBindings(prefix = "demo.config", type = DemoConfig.class)
-	@PropertySource("application.properties")
-	private static class TestConfig {
+//		context.refresh();
+//		System.out.println(Arrays.toString(context.getBeanNamesForType(DemoConfig.class)));
 
 	}
+
+//	@EnableDemoConfigBindings(prefix = "demo.config", type = DemoConfig.class)
+//	@PropertySource("application.properties")
+//	private static class TestConfig {
+//
+//	}
 
 }
