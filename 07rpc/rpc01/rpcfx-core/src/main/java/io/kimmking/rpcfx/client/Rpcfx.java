@@ -129,11 +129,11 @@ public final class Rpcfx {
         public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
 
             List<String> urls = router.route(invokers);
-            System.out.println("router.route => ");
-            urls.forEach(System.out::println);
+//            System.out.println("router.route => ");
+//            urls.forEach(System.out::println);
             String url = loadBalance.select(urls); // router, loadbalance
-            System.out.println("loadBalance.select => ");
-            System.out.println("final => " + url);
+//            System.out.println("loadBalance.select => ");
+//            System.out.println("final => " + url);
 
             if (url == null) {
                 throw new RuntimeException("No available providers from registry center.");
@@ -170,7 +170,7 @@ public final class Rpcfx {
 
         private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
             String reqJson = JSON.toJSONString(req);
-            System.out.println("req json: "+reqJson);
+//            System.out.println("req json: "+reqJson);
 
             // 1.可以复用client
             // 2.尝试使用httpclient或者netty client
@@ -180,7 +180,7 @@ public final class Rpcfx {
                     .post(RequestBody.create(JSONTYPE, reqJson))
                     .build();
             String respJson = client.newCall(request).execute().body().string();
-            System.out.println("resp json: "+respJson);
+//            System.out.println("resp json: "+respJson);
             return JSON.parseObject(respJson, RpcfxResponse.class);
         }
     }

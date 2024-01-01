@@ -84,7 +84,7 @@ public class RpcfxClientApplication implements CommandLineRunner {
 		@Override
 		public boolean filter(RpcfxRequest request) {
 			//log.info("filter {} -> {}", this.getClass().getName(), request.toString());
-			System.out.printf("filter %s -> %s%n", this.getClass().getName(), request.toString());
+			//System.out.printf("filter %s -> %s%n", this.getClass().getName(), request.toString());
 			return true;
 		}
 	}
