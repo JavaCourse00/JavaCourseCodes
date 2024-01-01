@@ -1,22 +1,28 @@
 package io.kimmking.rpcfx.demo.consumer;
 
-import io.kimmking.rpcfx.api.Filter;
-import io.kimmking.rpcfx.api.LoadBalancer;
-import io.kimmking.rpcfx.api.Router;
-import io.kimmking.rpcfx.api.RpcfxRequest;
+import io.kimmking.rpcfx.api.*;
 import io.kimmking.rpcfx.client.Rpcfx;
 import io.kimmking.rpcfx.demo.api.Order;
 import io.kimmking.rpcfx.demo.api.OrderService;
 import io.kimmking.rpcfx.demo.api.User;
 import io.kimmking.rpcfx.demo.api.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootApplication
-public class RpcfxClientApplication {
+@RestController
+//@ComponentScan("io.kimmking.rpcfx")
+public class RpcfxClientApplication implements CommandLineRunner {
 
 	// 二方库
 	// 三方库 lib
@@ -36,12 +42,25 @@ public class RpcfxClientApplication {
 //		Order order = orderService.findOrderById(1992129);
 //		System.out.println(String.format("find order name=%s, amount=%f",order.getName(),order.getAmount()));
 
+//		UserService userService2 = Rpcfx.createFromRegistry(UserService.class, "localhost:2181", new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
+//		User user = userService2.findById(1);
+//		System.out.println(user.getName());
 
-		UserService userService2 = Rpcfx.createFromRegistry(UserService.class, "localhost:2181", new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
+		SpringApplication.run(RpcfxClientApplication.class, args);
+	}
+
+	UserService userService2;// = Rpcfx.createFromRegistry(UserService.class, "localhost:2181", new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
+
+	@GetMapping("/api/hello")
+	public User invoke() {
+		return userService2.findById(100);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		userService2 = Rpcfx.createFromRegistry(UserService.class, "localhost:2181", new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
 		User user = userService2.findById(1);
-		System.out.println(user);
-
-//		SpringApplication.run(RpcfxClientApplication.class, args);
+		System.out.println(user.getName());
 	}
 
 	private static class TagRouter implements Router {
@@ -52,9 +71,11 @@ public class RpcfxClientApplication {
 	}
 
 	private static class RandomLoadBalancer implements LoadBalancer {
+		private final Random random = new Random();
 		@Override
 		public String select(List<String> urls) {
-			return urls.get(0);
+			if(urls.isEmpty()) return null;
+			return urls.get(random.nextInt(urls.size()));
 		}
 	}
 
@@ -62,7 +83,8 @@ public class RpcfxClientApplication {
 	private static class CuicuiFilter implements Filter {
 		@Override
 		public boolean filter(RpcfxRequest request) {
-			log.info("filter {} -> {}", this.getClass().getName(), request.toString());
+			//log.info("filter {} -> {}", this.getClass().getName(), request.toString());
+			System.out.printf("filter %s -> %s%n", this.getClass().getName(), request.toString());
 			return true;
 		}
 	}

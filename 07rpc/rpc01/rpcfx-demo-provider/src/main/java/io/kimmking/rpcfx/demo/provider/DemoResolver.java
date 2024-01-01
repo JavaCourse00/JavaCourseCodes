@@ -3,7 +3,9 @@ package io.kimmking.rpcfx.demo.provider;
 import io.kimmking.rpcfx.api.RpcfxResolver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DemoResolver implements RpcfxResolver, ApplicationContextAware {
 
     private ApplicationContext applicationContext;

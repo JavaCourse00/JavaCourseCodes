@@ -31,7 +31,7 @@
 2. 编译代码, 执行命令： `javac -g HelloNum.java`
 3. 查看反编译的代码。
   - 3.1 可以安装并使用idea的jclasslib插件, 选中 [HelloNum.java](./HelloNum.java) 文件, 选择 `View --> Show Bytecode With jclasslib` 即可。
-  - 3.2 或者直接通过命令行工具 javap, 执行命令: `javap -v HelloNum.class`
+  - 3.2 或者直接通过命令行工具 javap, 执行命令: `javap -c -v -p -l HelloNum.class`
 4. 分析相关的字节码。【此步骤需要各位同学自己进行分析】
 
 
