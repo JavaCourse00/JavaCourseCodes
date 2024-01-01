@@ -100,7 +100,7 @@ public final class Rpcfx {
     private static <T> Object create(Class<T> serviceClass, List<String> invokers, Router router, LoadBalancer loadBalance, Filter... filters) {
         // 0. 替换动态代理 -> 字节码生成
         return (T) Proxy.newProxyInstance(Rpcfx.class.getClassLoader(), new Class[]{serviceClass},
-                new RpcfxInvocationHandler(serviceClass, invokers, router,loadBalance, filters));
+                new RpcfxInvocationHandler(serviceClass, invokers, router, loadBalance, filters));
     }
 
 }

@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  main:
+    allow-circular-references: true
+  task:
+    execution:
+      pool:
+        core-size: 32
+        max-size: 128
