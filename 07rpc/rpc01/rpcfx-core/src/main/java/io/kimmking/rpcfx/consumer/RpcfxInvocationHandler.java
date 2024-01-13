@@ -1,7 +1,8 @@
-package io.kimmking.rpcfx.client;
+package io.kimmking.rpcfx.consumer;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.*;
+import io.kimmking.rpcfx.stub.StubSkeletonHelper;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -34,6 +35,10 @@ public class RpcfxInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
+
+        if (!StubSkeletonHelper.checkRpcMethod(method)){
+            return null ;
+        }
 
         List<String> urls = router.route(invokers);
 //            System.out.println("router.route => ");
@@ -84,9 +89,6 @@ public class RpcfxInvocationHandler implements InvocationHandler {
     private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
         String reqJson = JSON.toJSONString(req);
 //            System.out.println("req json: "+reqJson);
-
-        // 1.可以复用client
-        // 2.尝试使用httpclient或者netty client
 
         final Request request = new Request.Builder()
                 .url(url)
