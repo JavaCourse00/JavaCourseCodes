@@ -23,10 +23,12 @@
 hs_err_pid*
 *.iml
 *.idea/
+*.mvn/
 
 out/
 classes/
 target/
 build/
+out/
 
 .DS_Store
