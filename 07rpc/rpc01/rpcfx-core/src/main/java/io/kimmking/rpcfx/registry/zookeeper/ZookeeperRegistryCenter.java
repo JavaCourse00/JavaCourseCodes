@@ -42,7 +42,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
 
     public void registerService(ServiceMeta service, InstanceMeta instance) throws Exception {
         ServiceProviderDesc userServiceSesc = ServiceProviderDesc.builder()
-                .host(instance.getIp())
+                .host(instance.getHost())
                 .port(instance.getPort()).serviceClass(service.getName()).build();
         // String userServiceSescJson = JSON.toJSONString(userServiceSesc);
 
@@ -63,9 +63,9 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         if (null == client.checkExists().forPath("/" + service)) {
             return;
         }
-        System.out.println("delete " + "/" + service + "/" + instance.getIp() + "_" + instance.getPort());
+        System.out.println("delete " + "/" + service + "/" + instance.getHost() + "_" + instance.getPort());
         client.delete().quietly().
-                forPath( "/" + service + "/" + instance.getIp() + "_" + instance.getPort());
+                forPath( "/" + service + "/" + instance.getHost() + "_" + instance.getPort());
     }
 
     public List<InstanceMeta> fetchInstances(ServiceMeta service) throws Exception {

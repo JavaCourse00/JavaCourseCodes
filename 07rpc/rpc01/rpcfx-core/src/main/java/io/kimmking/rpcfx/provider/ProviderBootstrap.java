@@ -112,7 +112,7 @@ public class ProviderBootstrap {
                     .app(app).namespace(ns).env(env).build();
 
             InstanceMeta im = InstanceMeta.builder()
-                    .scheme(SCHEME).ip(ip).port(port).context("").build();
+                    .scheme(SCHEME).host(ip).port(port).context("").build();
             try {
                 registry.registerService(sm, im);
                 registry.heartbeat(sm, im);
@@ -136,7 +136,7 @@ public class ProviderBootstrap {
                     ServiceMeta sm = ServiceMeta.builder().name(x)
                             .app(app).namespace(ns).env(env).build();
                     InstanceMeta im = InstanceMeta.builder()
-                            .scheme(SCHEME).ip(ip).port(port).context("").build();
+                            .scheme(SCHEME).host(ip).port(port).context("").build();
                     try {
                         registry.unregisterService(sm, im);
                     } catch (Exception e) {

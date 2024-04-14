@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("io.kimmking.rpcfx")
+@ComponentScan({"io.kimmking.rpcfx.consumer","io.kimmking.rpcfx.demo.consumer"})
 public class RpcfxClientApplication {
 
 	public static void main(String[] args) {

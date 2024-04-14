@@ -17,7 +17,8 @@ public class RegistryConfiguration {
 
     @Bean
     RegistryCenter createRC() {
-        return new ZookeeperRegistryCenter(); //KKRegistryCenter();
+        return new KKRegistryCenter();
+        //return new ZookeeperRegistryCenter(); //KKRegistryCenter();
     }
 
 }

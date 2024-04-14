@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-@ComponentScan("io.kimmking.rpcfx")
+@ComponentScan({"io.kimmking.rpcfx.provider", "io.kimmking.rpcfx.demo.provider"})
 public class RpcfxServerApplication implements CommandLineRunner {
 
 	@Autowired

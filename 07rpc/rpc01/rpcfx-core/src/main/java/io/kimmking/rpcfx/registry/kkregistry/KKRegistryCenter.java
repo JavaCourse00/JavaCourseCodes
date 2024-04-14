@@ -48,48 +48,62 @@ public class KKRegistryCenter implements RegistryCenter {
 
     @Override
     public void registerService(ServiceMeta service, InstanceMeta instance) throws Exception {
-        String reqJson = "{\n" +
-                "  \"scheme\": \"http\",\n" +
-                "  \"ip\": \"" + instance.getIp() + "\",\n" +
-                "  \"port\": \"" + instance.getPort() + "\",\n" +
-                "  \"context\": \"\",\n" +
-                "  \"status\": \"online\",\n" +
-                "  \"metadata\": {\n" +
-                "    \"env\": \"dev\",\n" +
-                "    \"tag\": \"RED\"\n" +
-                "  }\n" +
-                "}";
+        instance.setStatus(true);
+        String reqJson = JSON.toJSONString(instance);
+        String url = "http://localhost:8484/reg?service=" + service;
+        System.out.println(" ====> reg service: " + url);
         final Request request = new Request.Builder()
-                .url("http://localhost:8484/reg?service=" + service)
+                .url(url)
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        System.out.println(respJson);
+        System.out.println(" ====> reg response: " + respJson);
+//        String reqJson = "{\n" +
+//                "  \"scheme\": \"http\",\n" +
+//                "  \"ip\": \"" + instance.getIp() + "\",\n" +
+//                "  \"port\": \"" + instance.getPort() + "\",\n" +
+//                "  \"context\": \"\",\n" +
+//                "  \"status\": \"online\",\n" +
+//                "  \"metadata\": {\n" +
+//                "    \"env\": \"dev\",\n" +
+//                "    \"tag\": \"RED\"\n" +
+//                "  }\n" +
+//                "}";
+//        final Request request = new Request.Builder()
+//                .url("http://localhost:8484/reg?service=" + service)
+//                .post(RequestBody.create(JSONTYPE, reqJson))
+//                .build();
+//        String respJson = client.newCall(request).execute().body().string();
+//        System.out.println(respJson);
     }
 
     @Override
     public void unregisterService(ServiceMeta service, InstanceMeta instance) throws Exception {
         String reqJson = "{\n" +
                 "  \"scheme\": \"http\",\n" +
-                "  \"ip\": \"" + instance.getIp() + "\",\n" +
+                "  \"host\": \"" + instance.getHost() + "\",\n" +
                 "  \"port\": \"" + instance.getPort() + "\",\n" +
                 "  \"context\": \"\"\n" +
                 "}";
+        String url = "http://localhost:8484/unreg?service=" + service;
+        System.out.println(" ====> unreg service: " + url);
         final Request request = new Request.Builder()
-                .url("http://localhost:8484/unreg?service=" + service)
+                .url(url)
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        System.out.println(respJson);
+        System.out.println(" ====> unreg response: " + respJson);
     }
 
     public List<InstanceMeta> fetchInstances(ServiceMeta service) throws Exception {
+        String url = "http://localhost:8484/findAll?service=" + service;
+        System.out.println(" ====> fetchInstances: " + url);
         final Request request = new Request.Builder()
-                .url("http://localhost:8484/list?service=" + service)
+                .url(url)
                 .get()
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        System.out.println(respJson);
+        System.out.println(" ====> fetchInstances response: " + respJson);
         List<InstanceMeta> instances = JSON.parseObject(respJson, new TypeReference<List<InstanceMeta>>() {
         });
         return instances;
@@ -115,12 +129,14 @@ public class KKRegistryCenter implements RegistryCenter {
 
     private boolean hb(ServiceMeta service, ChangedListener listener) throws Exception {
         String svc = service.toString();
+        String url = "http://localhost:8484/version?service=" + svc;
+        System.out.println(" ====> consumer version: " + url);
         final Request request = new Request.Builder()
-                .url("http://localhost:8484/hb?service=" + svc)
+                .url(url)
                 .get()
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        System.out.println("hb:"+respJson);
+        System.out.println(" ====> consumer version: "+respJson);
         Long v = Long.valueOf(respJson);
         Long o = TV.getOrDefault(svc, -1L);
         if ( v > o) {
@@ -141,17 +157,19 @@ public class KKRegistryCenter implements RegistryCenter {
     Long heart(ServiceMeta service, InstanceMeta instance) throws Exception {
         String reqJson = "{\n" +
                 "  \"scheme\": \"http\",\n" +
-                "  \"ip\": \"" + instance.getIp() + "\",\n" +
+                "  \"host\": \"" + instance.getHost() + "\",\n" +
                 "  \"port\": \"" + instance.getPort() + "\",\n" +
                 "  \"context\": \"\",\n" +
-                "  \"status\": \"online\"\n" +
+                "  \"status\": true\n" +
                 "}";
+        String url = "http://localhost:8484/renew?service=" + service;
+        System.out.println(" ====> provider renew: " + url);
         final Request request = new Request.Builder()
-                .url("http://localhost:8484/heart?service=" + service)
+                .url(url)
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
         String respJson = client.newCall(request).execute().body().string();
-        System.out.println("heart:"+respJson);
+        System.out.println(" ====> provider renew: "+respJson);
         return Long.valueOf(respJson);
     }
 
