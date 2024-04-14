@@ -4,6 +4,8 @@ public interface UserService {
 
     User findById(int id);
 
+    User find(int timeout);
+
     //User findById(int id, String name);
 
 }

@@ -2,7 +2,9 @@ package io.kimmking.rpcfx.api;
 
 public interface Filter {
 
-    boolean filter(RpcfxRequest request);
+    RpcfxResponse prefilter(RpcfxRequest request);
+
+    RpcfxResponse postfilter(RpcfxRequest request, RpcfxResponse response);
 
     // Filter next();
 

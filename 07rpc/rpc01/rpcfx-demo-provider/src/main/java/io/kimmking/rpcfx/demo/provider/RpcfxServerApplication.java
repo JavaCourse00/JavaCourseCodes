@@ -23,7 +23,7 @@ public class RpcfxServerApplication implements CommandLineRunner {
 	@Autowired
 	ProviderBootstrap bootstrap;
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(RpcfxServerApplication.class, args);
 	}
 
@@ -38,12 +38,12 @@ public class RpcfxServerApplication implements CommandLineRunner {
 		RpcfxRequest request = new RpcfxRequest();
 		request.setServiceClass("io.kimmking.rpcfx.demo.api.UserService");
 		request.setParams(new Object[]{1});
-		request.setMethod("findById");
+		request.setMethodSign("findById@1_int,");
 		return bootstrap.getInvoker().invoke(request);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		RpcfxResponse response = invoke();
 		System.out.println(JSON.toJSONString(response));
 	}

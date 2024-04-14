@@ -1,9 +1,11 @@
 package io.kimmking.rpcfx.api;
 
+import io.kimmking.rpcfx.meta.InstanceMeta;
+
 import java.util.List;
 
 public interface LoadBalancer {
 
-    String select(List<String> urls);
+    InstanceMeta select(List<InstanceMeta> instances);
 
 }

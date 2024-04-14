@@ -12,3 +12,11 @@ spring:
       pool:
         core-size: 32
         max-size: 128
+
+app:
+  id: app2
+  namespace: ns1
+  env: sit
+  mock: false
+  cache: false
+  retry: 2

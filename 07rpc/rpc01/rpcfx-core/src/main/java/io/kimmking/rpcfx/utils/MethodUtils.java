@@ -9,10 +9,10 @@ public class MethodUtils {
 
     public static String methodSign(Method method) {
         if (method != null) {
-            StringBuilder builder = new StringBuilder("method:");
+            StringBuilder builder = new StringBuilder();
             String name = method.getName();
             builder.append(name);
-            builder.append("_");
+            builder.append("@");
             int count = method.getParameterCount();
             builder.append(count);
             builder.append("_");
@@ -20,8 +20,9 @@ public class MethodUtils {
                 Class<?>[] classes = method.getParameterTypes();
                 Arrays.stream(classes).forEach(c -> builder.append(c.getName() + ","));
             }
-            String string = builder.toString();
-            return DigestUtils.md5DigestAsHex(string.getBytes());
+            return builder.toString();
+//            String string = builder.toString();
+//            return DigestUtils.md5DigestAsHex(string.getBytes());
         }
         return "";
     }

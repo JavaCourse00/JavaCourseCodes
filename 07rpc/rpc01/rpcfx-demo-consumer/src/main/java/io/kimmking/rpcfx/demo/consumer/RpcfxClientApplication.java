@@ -2,23 +2,13 @@ package io.kimmking.rpcfx.demo.consumer;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.annotation.RpcfxReference;
-import io.kimmking.rpcfx.api.Filter;
-import io.kimmking.rpcfx.api.LoadBalancer;
-import io.kimmking.rpcfx.api.Router;
-import io.kimmking.rpcfx.api.RpcfxRequest;
-import io.kimmking.rpcfx.consumer.RpcfxInvoker;
-import io.kimmking.rpcfx.demo.api.User;
+import io.kimmking.rpcfx.demo.api.OrderService;
 import io.kimmking.rpcfx.demo.api.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Random;
 
 @SpringBootApplication
 @ComponentScan("io.kimmking.rpcfx")
@@ -44,11 +34,21 @@ public class RpcfxClientApplication {
 		SpringApplication.run(RpcfxClientApplication.class, args);
 	}
 
-//	@Override
-//	public void run(String... args) throws Exception {
-//		// userService2 = RpcfxInvoker.createFromRegistry(UserService.class, new TagRouter(), new RandomLoadBalancer(), new CuicuiFilter());
-//		User user = userService2.findById(1);
-//		System.out.println(JSON.toJSONString(user));
+	@RpcfxReference
+	UserService userService;
+
+	@RpcfxReference
+	OrderService orderService;
+
+	@Bean
+	public ApplicationRunner runUserService() {
+		System.out.println(JSON.toJSONString(userService.hashCode()));
+		return x -> System.out.println(JSON.toJSONString(userService.find(500)));
+	}
+
+//	@Bean
+//	public ApplicationRunner runOrderService() {
+//		return x -> System.out.println(JSON.toJSONString(orderService.findOrderById(11)));
 //	}
 
 }

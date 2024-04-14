@@ -1,8 +1,10 @@
 package io.kimmking.rpcfx.api;
 
+import io.kimmking.rpcfx.meta.InstanceMeta;
+
 import java.util.List;
 
 public interface Router {
 
-    List<String> route(List<String> urls);
+    List<InstanceMeta> route(List<InstanceMeta> instances);
 }

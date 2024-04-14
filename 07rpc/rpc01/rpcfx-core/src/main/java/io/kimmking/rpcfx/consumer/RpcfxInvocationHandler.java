@@ -2,31 +2,32 @@ package io.kimmking.rpcfx.consumer;
 
 import com.alibaba.fastjson.JSON;
 import io.kimmking.rpcfx.api.*;
+import io.kimmking.rpcfx.meta.InstanceMeta;
 import io.kimmking.rpcfx.stub.StubSkeletonHelper;
+import io.kimmking.rpcfx.utils.MethodUtils;
 import okhttp3.*;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RpcfxInvocationHandler implements InvocationHandler {
 
+    public final Object target = new Object();
+
     public static final MediaType JSONTYPE = MediaType.get("application/json; charset=utf-8");
 
     private final Class<?> serviceClass;
-    private final List<String> invokers;
-    private final Router router;
-    private final LoadBalancer loadBalance;
-    private final Filter[] filters;
+    private final List<InstanceMeta> invokers;
 
-    public <T> RpcfxInvocationHandler(Class<T> serviceClass, List<String> invokers, Router router, LoadBalancer loadBalance, Filter... filters) {
+    private final RpcContext context;
+
+    public <T> RpcfxInvocationHandler(Class<T> serviceClass, List<InstanceMeta> invokers, RpcContext ctx) {
         this.serviceClass = serviceClass;
         this.invokers = invokers;
-        this.router = router;
-        this.loadBalance = loadBalance;
-        this.filters = filters;
+        this.context = ctx;
     }
 
     // 可以尝试，自己去写对象序列化，二进制还是文本的，，，rpcfx是xml自定义序列化、反序列化，json: code.google.com/p/rpcfx
@@ -36,66 +37,104 @@ public class RpcfxInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
 
+        long start = System.currentTimeMillis();
+
         if (!StubSkeletonHelper.checkRpcMethod(method)){
-            return null ;
+            return method.invoke(target, params);
         }
 
-        List<String> urls = router.route(invokers);
+
+        int retry = 2;
+        while (retry-- > 0) {
+            System.out.println("retry:" + retry);
+            try {
+
+                // check mock, 挡板功能 TODO 3
+
+                List<InstanceMeta> insts = context.getRouter().route(invokers);
 //            System.out.println("router.route => ");
 //            urls.forEach(System.out::println);
-        String url = loadBalance.select(urls); // router, loadbalance
+                InstanceMeta instance = context.getLoadBalancer().select(insts); // router, loadbalance
 //            System.out.println("loadBalance.select => ");
 //            System.out.println("final => " + url);
 
-        if (url == null) {
-            throw new RuntimeException("No available providers from registry center.");
-        }
+                if (instance == null) {
+                    throw new RuntimeException("No available providers from registry center.");
+                }
 
-        // 加filter地方之二
-        // mock == true, new Student("hubao");
 
-        RpcfxRequest request = new RpcfxRequest();
-        request.setServiceClass(this.serviceClass.getName());
-        request.setMethod(method.getName());
-        request.setParams(params);
+                RpcfxRequest request = new RpcfxRequest();
+                request.setServiceClass(this.serviceClass.getName());
+                request.setMethodSign(MethodUtils.methodSign(method));
+                request.setParams(params);
 
-        if (null!=filters) {
-            for (Filter filter : filters) {
-                if (!filter.filter(request)) {
-                    return null;
+                Filter[] filters = context.getFilters();
+
+                if (null != filters) {
+                    for (Filter filter : filters) {
+                        RpcfxResponse response = filter.prefilter(request);
+                        if (response != null) {
+                            return JSON.parse(response.getResult().toString());
+                        }
+                    }
+                }
+
+                // 没有控制超时，可能会很久 TODO 2
+                RpcfxResponse response = post(request, instance);
+
+                if (null != filters) {
+                    for (Filter filter : filters) {
+                        RpcfxResponse postResponse = filter.postfilter(request, response);
+                        if (postResponse!=null) {
+                            response = postResponse;
+                        }
+                    }
+                }
+
+                System.out.println("Invoke spend " + (System.currentTimeMillis()-start) + " ms");
+
+                // 加filter地方之三
+                // Student.setTeacher("cuijing");
+
+                // 这里判断response.status，处理异常
+                // 考虑封装一个全局的RpcfxException
+
+                return JSON.parse(response.getResult().toString());
+
+            } catch (RuntimeException ex) {
+                ex.printStackTrace();
+                if(! (ex.getCause() instanceof SocketTimeoutException)) {
+                    break;
                 }
             }
         }
+        return null;
 
-        RpcfxResponse response = post(request, url);
-
-        // 加filter地方之三
-        // Student.setTeacher("cuijing");
-
-        // 这里判断response.status，处理异常
-        // 考虑封装一个全局的RpcfxException
-
-        return JSON.parse(response.getResult().toString());
     }
 
     OkHttpClient client = new OkHttpClient.Builder()
             .connectionPool(new ConnectionPool(128, 60, TimeUnit.SECONDS))
 //            .dispatcher(dispatcher)
-//            .readTimeout(httpClientConfig.getReadTimeout(), TimeUnit.SECONDS)
-//            .writeTimeout(httpClientConfig.getWriteTimeout(), TimeUnit.SECONDS)
-//            .connectTimeout(httpClientConfig.getConnectTimeout(), TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
+            .connectTimeout(1, TimeUnit.SECONDS)
             .build();
 
-    private RpcfxResponse post(RpcfxRequest req, String url) throws IOException {
+    private RpcfxResponse post(RpcfxRequest req, InstanceMeta instance) throws Exception {
         String reqJson = JSON.toJSONString(req);
-//            System.out.println("req json: "+reqJson);
+            System.out.println("req json: "+reqJson);
 
         final Request request = new Request.Builder()
-                .url(url)
+                .url(instance.toString())
                 .post(RequestBody.create(JSONTYPE, reqJson))
                 .build();
-        String respJson = client.newCall(request).execute().body().string();
-//            System.out.println("resp json: "+respJson);
+        String respJson;
+        try {
+            respJson = client.newCall(request).execute().body().string();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        System.out.println("resp json: "+respJson);
         return JSON.parseObject(respJson, RpcfxResponse.class);
     }
 }

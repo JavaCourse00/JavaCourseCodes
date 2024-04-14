@@ -1,14 +1,18 @@
 package io.kimmking.rpcfx.stub;
 
 import io.kimmking.rpcfx.api.*;
-import io.kimmking.rpcfx.consumer.RpcfxInvoker;
+import io.kimmking.rpcfx.consumer.RpcfxConsumerInvoker;
+import io.kimmking.rpcfx.meta.InstanceMeta;
 import io.kimmking.rpcfx.meta.ProviderMeta;
+import io.kimmking.rpcfx.meta.ServiceMeta;
+import io.kimmking.rpcfx.registry.RegistryCenter;
+import io.kimmking.rpcfx.utils.MethodUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.MultiValueMap;
 
 import java.lang.reflect.Method;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author lirui
@@ -32,7 +36,7 @@ public class StubSkeletonHelper {
     }
 
     private static ProviderMeta buildProviderMeta(Method method, Object serviceImpl) {
-        String methodSign = method.getName();//MethodUtils.methodSign(method);
+        String methodSign = MethodUtils.methodSign(method);
         ProviderMeta providerMeta = new ProviderMeta();
         providerMeta.setMethod(method);
         providerMeta.setServiceImpl(serviceImpl);
@@ -54,43 +58,129 @@ public class StubSkeletonHelper {
         return true;
     }
 
-    public static <T> T createConsumer(Class<T> clazz, RpcContext rpcContext) {
-        String clazzName = clazz.getName();
-        T proxyHandler = (T) rpcContext.getConsumerHolder().get(clazzName);
-        if (proxyHandler == null) { // TODO configuration
-            proxyHandler = new RpcfxInvoker("localhost:2181")
-                            .createFromRegistry(clazz, new TagRouter(),
-                                new RandomLoadBalancer(), new CuicuiFilter());
-            rpcContext.getConsumerHolder().put(clazzName, proxyHandler);
+    public static <T> T createConsumer(ServiceMeta sm, RpcContext ctx, RegistryCenter rc) {
+        String clazzName = sm.getName();
+        Class<?> serviceClass = null;
+        try {
+            serviceClass = Class.forName(clazzName);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        return (T) proxyHandler;
+        T proxyHandler = (T) ctx.getConsumerHolder().get(clazzName);
+        if (proxyHandler == null) { // TODO configuration
+
+            ctx.setRouter(new TagRouter());
+            ctx.setLoadBalancer(new RoundRibbonLoadBalancer());
+            ctx.setFilters(createFilters(ctx));
+
+            T mockHandler = createMockHandler(ctx, serviceClass);
+            if(mockHandler != null) {
+                return mockHandler;
+            }
+
+            RpcfxConsumerInvoker consumerInvoker = new RpcfxConsumerInvoker(ctx, rc);
+            consumerInvoker.start();
+            proxyHandler = consumerInvoker.createFromRegistry(sm, ctx);
+            ctx.getConsumerHolder().put(clazzName, proxyHandler);
+        }
+        return proxyHandler;
+    }
+
+    private static Filter[] createFilters(RpcContext ctx) {
+        String cache = ctx.getParameters().getOrDefault("app.cache", "false");
+        Filter[] filters = null;
+        if("true".equalsIgnoreCase(cache)) {
+            filters = new Filter[]{new CuicuiFilter(), new CacheFilter()};
+        } else {
+            filters = new Filter[]{new CuicuiFilter()};
+        }
+        return filters;
+    }
+
+    private static <T> T createMockHandler(RpcContext ctx, Class<?> serviceClass) {
+        String mock = ctx.getParameters().getOrDefault("app.mock", "false");
+        if("true".equalsIgnoreCase(mock)) {
+            return (T) MockHandler.createMock(serviceClass);
+        }
+        return null;
     }
 
 
     private static class TagRouter implements Router {
         @Override
-        public List<String> route(List<String> urls) {
-            return urls;
+        public List<InstanceMeta> route(List<InstanceMeta> instances) {
+            return instances;
+        }
+    }
+
+    private static class RoundRibbonLoadBalancer implements LoadBalancer {
+        private final AtomicInteger count = new AtomicInteger(0);
+        @Override
+        public InstanceMeta select(List<InstanceMeta> instances) {
+            if(instances.isEmpty()) return null;
+            return instances.get((count.getAndIncrement() & Integer.MAX_VALUE) % instances.size());
         }
     }
 
     private static class RandomLoadBalancer implements LoadBalancer {
         private final Random random = new Random();
         @Override
-        public String select(List<String> urls) {
-            if(urls.isEmpty()) return null;
-            return urls.get(random.nextInt(urls.size()));
+        public InstanceMeta select(List<InstanceMeta> instances) {
+            if(instances.isEmpty()) return null;
+            return instances.get(random.nextInt(instances.size()));
         }
     }
 
     @Slf4j
     private static class CuicuiFilter implements Filter {
         @Override
-        public boolean filter(RpcfxRequest request) {
+        public RpcfxResponse prefilter(RpcfxRequest request) {
             //log.info("filter {} -> {}", this.getClass().getName(), request.toString());
             //System.out.printf("filter %s -> %s%n", this.getClass().getName(), request.toString());
-            return true;
+            return null;
         }
+
+        @Override
+        public RpcfxResponse postfilter(RpcfxRequest request, RpcfxResponse response) {
+            return response;
+        }
+
+    }
+
+    private static class CacheFilter implements Filter {
+
+        static Map<String, RpcfxResponse> CACHE = new HashMap<>();
+
+        @Override
+        public RpcfxResponse prefilter(RpcfxRequest request) {
+            RpcfxResponse response = CACHE.get(genKey(request));
+            if(response != null) {
+                System.out.println("CacheFilter.prefilter hit! => request: \n" + request + "\n =>response: \n" + response);
+            }
+            return response;
+            //log.info("filter {} -> {}", this.getClass().getName(), request.toString());
+            //System.out.printf("filter %s -> %s%n", this.getClass().getName(), request.toString());
+        }
+
+        @Override
+        public RpcfxResponse postfilter(RpcfxRequest request, RpcfxResponse response) {
+            String key = genKey(request);
+            if(!CACHE.containsKey(key)) {
+                CACHE.put(key, response);
+            }
+            return response;
+        }
+
+    }
+
+    public static String genKey(RpcfxRequest request) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(request.getServiceClass());
+        sb.append("@");
+        sb.append(request.getMethodSign());
+        //sb.append("");
+        Arrays.stream(request.getParams()).forEach(x -> sb.append("_"+x.toString()));
+        return sb.toString();
     }
 
 }

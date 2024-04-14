@@ -2,14 +2,19 @@ package io.kimmking.rpcfx.provider;
 
 import io.kimmking.rpcfx.annotation.RpcfxService;
 import io.kimmking.rpcfx.api.RpcContext;
+import io.kimmking.rpcfx.meta.InstanceMeta;
+import io.kimmking.rpcfx.meta.ServiceMeta;
 import io.kimmking.rpcfx.registry.RegistryCenter;
+import io.kimmking.rpcfx.registry.RegistryConfiguration;
 import io.kimmking.rpcfx.stub.StubSkeletonHelper;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
@@ -29,6 +34,7 @@ import java.util.Objects;
  */
 
 @Component
+@Import({RegistryConfiguration.class})
 public class ProviderBootstrap {
 
     @Autowired
@@ -37,16 +43,24 @@ public class ProviderBootstrap {
     @Autowired
     Environment environment;
 
-    private RpcContext rpcContext = new RpcContext();
+    @Value("${app.id:app1}")
+    public String app;
+    @Value("${app.namespace:public}")
+    public String ns;
+    @Value("${app.env:dev}")
+    public String env;
+
+    private final RpcContext context = new RpcContext();
 
     @Getter
-    private RpcfxInvoker invoker;
+    private final RpcfxProviderInvoker invoker = new RpcfxProviderInvoker(context);;
 
-    private static String PROTO = "http";
+    private static String SCHEME = "http";
     private static String ip;
     private static int port;
 
-    RegistryCenter registry = new RegistryCenter();
+    @Autowired
+    RegistryCenter registry;// = new KKRegistryCenter();
 
     @SneakyThrows
     @PostConstruct
@@ -77,8 +91,7 @@ public class ProviderBootstrap {
     }
 
     private void createProvider(Class<?> clazz, Object bean) {
-        StubSkeletonHelper.createProvider(clazz, bean, rpcContext); // 初始化了holder
-        this.invoker = new RpcfxInvoker(rpcContext);
+        StubSkeletonHelper.createProvider(clazz, bean, context); // 初始化了holder
     }
 
     @Order(Integer.MIN_VALUE)
@@ -91,13 +104,18 @@ public class ProviderBootstrap {
 
         registry.start();
 
-        System.out.println("registry all services from zk...");
-        rpcContext.getProviderHolder().forEach( (x,y) ->
+        System.out.println("registry all services from RegistryCenter...");
+        context.getProviderHolder().forEach( (x, y) ->
         {
             System.out.println(" register " + x);
+            ServiceMeta sm = ServiceMeta.builder().name(x)
+                    .app(app).namespace(ns).env(env).build();
 
+            InstanceMeta im = InstanceMeta.builder()
+                    .scheme(SCHEME).ip(ip).port(port).context("").build();
             try {
-                registry.registerService(x, ip, port);
+                registry.registerService(sm, im);
+                registry.heartbeat(sm, im);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -111,12 +129,16 @@ public class ProviderBootstrap {
     }
 
     private void unregisterServices() {
-        System.out.println("unregistry all services from zk...");
-        rpcContext.getProviderHolder().forEach( (x,y) ->
+        System.out.println("unregistry all services from RegistryCenter...");
+        context.getProviderHolder().forEach( (x, y) ->
                 {
                     System.out.println(" unregister " + x);
+                    ServiceMeta sm = ServiceMeta.builder().name(x)
+                            .app(app).namespace(ns).env(env).build();
+                    InstanceMeta im = InstanceMeta.builder()
+                            .scheme(SCHEME).ip(ip).port(port).context("").build();
                     try {
-                        registry.unregisterService(x, ip, port);
+                        registry.unregisterService(sm, im);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

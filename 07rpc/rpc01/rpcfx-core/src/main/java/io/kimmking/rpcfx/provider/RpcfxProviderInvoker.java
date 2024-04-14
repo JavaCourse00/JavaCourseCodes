@@ -13,11 +13,11 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
 
-public class RpcfxInvoker {
+public class RpcfxProviderInvoker {
 
     RpcContext context;
 
-    public RpcfxInvoker(RpcContext context) {
+    public RpcfxProviderInvoker(RpcContext context) {
         this.context = context;
     }
 
@@ -25,10 +25,11 @@ public class RpcfxInvoker {
         RpcfxResponse response = new RpcfxResponse();
         String serviceClass = request.getServiceClass();
 
-        ProviderMeta meta = findProvider(serviceClass, request.getMethod());
+        ProviderMeta meta = findProvider(serviceClass, request.getMethodSign());
 
         try {
             Method method = meta.getMethod();
+            // 没有控制超时，所以可能会很久 TODO 1
             Object result = method.invoke(meta.getServiceImpl(), request.getParams()); // dubbo, fastjson,
             // 两次json序列化能否合并成一个
             response.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
@@ -50,7 +51,8 @@ public class RpcfxInvoker {
     protected ProviderMeta findProvider(String interfaceName, String methodSign) {
         List<ProviderMeta> providerMetas = context.getProviderHolder().get(interfaceName);
         if (!CollectionUtils.isEmpty(providerMetas)) {
-            Optional<ProviderMeta> providerMeta = providerMetas.stream().filter(provider -> methodSign.equals(provider.getMethodSign())).findFirst();
+            Optional<ProviderMeta> providerMeta = providerMetas.stream()
+                    .filter(provider -> methodSign.equals(provider.getMethodSign())).findFirst();
             return providerMeta.orElse(null);
         }
         return null;
