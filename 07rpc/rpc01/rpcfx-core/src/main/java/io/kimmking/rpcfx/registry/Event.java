@@ -16,7 +16,7 @@ public interface Event<T> {
 
     T getData();
 
-    static Event withData(List<InstanceMeta> list) {
+    static Event<List<InstanceMeta>> withData(List<InstanceMeta> list) {
         return new ChangedEvent(list);
     }
 

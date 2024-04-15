@@ -3,18 +3,22 @@ package io.kimmking.rpcfx.registry.kkregistry;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import io.kimmking.rpcfx.meta.InstanceMeta;
+import io.kimmking.rpcfx.meta.ServerMeta;
 import io.kimmking.rpcfx.meta.ServiceMeta;
 import io.kimmking.rpcfx.registry.ChangedListener;
 import io.kimmking.rpcfx.registry.Event;
 import io.kimmking.rpcfx.registry.RegistryCenter;
+import lombok.SneakyThrows;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static io.kimmking.rpcfx.consumer.RpcfxInvocationHandler.JSONTYPE;
@@ -27,9 +31,13 @@ import static io.kimmking.rpcfx.consumer.RpcfxInvocationHandler.JSONTYPE;
  */
 public class KKRegistryCenter implements RegistryCenter {
 
+    public String RC_Server = "http://localhost:8485";
+    private ServerMeta leader;
+    private List<ServerMeta> servers;
     private Map<String, Long> TV = new HashMap<>();
 
     OkHttpClient client;
+    @SneakyThrows
     @Override
     public void start() {
         client = new OkHttpClient.Builder()
@@ -39,6 +47,40 @@ public class KKRegistryCenter implements RegistryCenter {
             .writeTimeout(65, TimeUnit.SECONDS)
             .connectTimeout(3, TimeUnit.SECONDS)
                 .build();
+
+        String url = RC_Server + "/cluster";
+        boolean init = false;
+        while(!init) {
+            System.out.println("===============>> cluster info from :" + url);
+            List<ServerMeta> new_servers = null;
+            ServerMeta new_leader = null;
+            try {
+                String respJson = get(url);
+                new_servers = JSON.parseObject(respJson, new TypeReference<List<ServerMeta>>() {
+                });
+                new_leader = new_servers.stream().filter(ServerMeta::isStatus)
+                        .filter(ServerMeta::isLeader).findFirst().orElse(null);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+            if(new_leader == null) {
+                System.out.println("===============>> no leader, 500ms later and retry.");
+                Thread.sleep(500);
+                Random random = new Random();
+                if(new_servers !=null && new_servers.size() > 1) {
+                    url = new_servers.get(random.nextInt(new_servers.size())).getUrl() + "/cluster";
+                } else if((new_servers ==null || new_servers.isEmpty()) && !servers.isEmpty()) {
+                    url = servers.get(random.nextInt(servers.size())).getUrl() + "/cluster";
+                }
+            } else {
+                this.servers = new_servers;
+                this.leader = new_leader;
+                init = true;
+                System.out.println("===============>> init ok, new_leader  = " + new_leader);
+                System.out.println("===============>> init ok, new_servers = " + new_servers);
+            }
+        }
     }
 
     @Override
@@ -50,14 +92,8 @@ public class KKRegistryCenter implements RegistryCenter {
     public void registerService(ServiceMeta service, InstanceMeta instance) throws Exception {
         instance.setStatus(true);
         String reqJson = JSON.toJSONString(instance);
-        String url = "http://localhost:8484/reg?service=" + service;
-        System.out.println(" ====> reg service: " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .post(RequestBody.create(JSONTYPE, reqJson))
-                .build();
-        String respJson = client.newCall(request).execute().body().string();
-        System.out.println(" ====> reg response: " + respJson);
+        String url = leader.getUrl() + "/reg?service=" + service;
+        post(url, reqJson);
 //        String reqJson = "{\n" +
 //                "  \"scheme\": \"http\",\n" +
 //                "  \"ip\": \"" + instance.getIp() + "\",\n" +
@@ -77,6 +113,28 @@ public class KKRegistryCenter implements RegistryCenter {
 //        System.out.println(respJson);
     }
 
+    private String post(String url, String reqJson) throws IOException {
+        System.out.println(" ====> request: " + url);
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(JSONTYPE, reqJson))
+                .build();
+        String respJson = client.newCall(request).execute().body().string();
+        System.out.println(" ====> response: " + respJson);
+        return respJson;
+    }
+
+    private String get(String url) throws IOException {
+        System.out.println(" ====> request: " + url);
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        String respJson = client.newCall(request).execute().body().string();
+        System.out.println(" ====> response: " + respJson);
+        return respJson;
+    }
+
     @Override
     public void unregisterService(ServiceMeta service, InstanceMeta instance) throws Exception {
         String reqJson = "{\n" +
@@ -85,25 +143,13 @@ public class KKRegistryCenter implements RegistryCenter {
                 "  \"port\": \"" + instance.getPort() + "\",\n" +
                 "  \"context\": \"\"\n" +
                 "}";
-        String url = "http://localhost:8484/unreg?service=" + service;
-        System.out.println(" ====> unreg service: " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .post(RequestBody.create(JSONTYPE, reqJson))
-                .build();
-        String respJson = client.newCall(request).execute().body().string();
-        System.out.println(" ====> unreg response: " + respJson);
+        String url = leader.getUrl() + "/unreg?service=" + service;
+        post(url, reqJson);
     }
 
     public List<InstanceMeta> fetchInstances(ServiceMeta service) throws Exception {
-        String url = "http://localhost:8484/findAll?service=" + service;
-        System.out.println(" ====> fetchInstances: " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        String respJson = client.newCall(request).execute().body().string();
-        System.out.println(" ====> fetchInstances response: " + respJson);
+        String url = RC_Server + "/findAll?service=" + service;
+        String respJson = get(url);
         List<InstanceMeta> instances = JSON.parseObject(respJson, new TypeReference<List<InstanceMeta>>() {
         });
         return instances;
@@ -112,12 +158,11 @@ public class KKRegistryCenter implements RegistryCenter {
     KKHeathChecker checker = new KKHeathChecker();
 
     // for Consumer
-    public void subscribe(ServiceMeta service, final ChangedListener listener) {
-
+    public void subscribe(ServiceMeta service, final ChangedListener<List<InstanceMeta>> listener) {
         checker.check( () -> {
-            if(hb(service, listener)) {
+            if(hb(service)) {
                 List<InstanceMeta> instances = fetchInstances(service);
-                Event e = Event.withData(instances);
+                Event<List<InstanceMeta>>  e = Event.withData(instances);
                 listener.fireEvent(e);
             }
         });
@@ -127,16 +172,10 @@ public class KKRegistryCenter implements RegistryCenter {
         // 如果有差异就fire
     }
 
-    private boolean hb(ServiceMeta service, ChangedListener listener) throws Exception {
+    private boolean hb(ServiceMeta service) throws Exception {
         String svc = service.toString();
-        String url = "http://localhost:8484/version?service=" + svc;
-        System.out.println(" ====> consumer version: " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        String respJson = client.newCall(request).execute().body().string();
-        System.out.println(" ====> consumer version: "+respJson);
+        String url = RC_Server + "/version?service=" + svc;
+        String respJson = get(url);
         Long v = Long.valueOf(respJson);
         Long o = TV.getOrDefault(svc, -1L);
         if ( v > o) {
@@ -162,14 +201,8 @@ public class KKRegistryCenter implements RegistryCenter {
                 "  \"context\": \"\",\n" +
                 "  \"status\": true\n" +
                 "}";
-        String url = "http://localhost:8484/renew?service=" + service;
-        System.out.println(" ====> provider renew: " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .post(RequestBody.create(JSONTYPE, reqJson))
-                .build();
-        String respJson = client.newCall(request).execute().body().string();
-        System.out.println(" ====> provider renew: "+respJson);
+        String url = leader.getUrl() + "/renew?service=" + service;
+        String respJson = post(url, reqJson);
         return Long.valueOf(respJson);
     }
 

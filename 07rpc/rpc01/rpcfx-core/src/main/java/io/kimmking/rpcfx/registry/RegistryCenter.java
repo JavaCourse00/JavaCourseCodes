@@ -28,7 +28,7 @@ public interface RegistryCenter {
 
      List<InstanceMeta> fetchInstances(ServiceMeta service) throws Exception;
 
-     void subscribe(ServiceMeta service, ChangedListener listener);
+     void subscribe(ServiceMeta service, ChangedListener<List<InstanceMeta>> listener);
 
      void heartbeat(ServiceMeta service, InstanceMeta instance);
 
