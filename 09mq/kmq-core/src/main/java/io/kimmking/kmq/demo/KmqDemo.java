@@ -16,6 +16,11 @@ public class KmqDemo {
         KmqBroker broker = new KmqBroker();
         broker.createTopic(topic);
 
+        KmqConsumer subscriber = broker.createConsumer();
+        subscriber.subscribe(topic, (message) -> {
+            System.out.println(subscriber.getId() + " : " + message.getBody());
+        });
+
         KmqConsumer consumer = broker.createConsumer();
         consumer.subscribe(topic);
         final boolean[] flag = new boolean[1];
@@ -24,14 +29,14 @@ public class KmqDemo {
             while (flag[0]) {
                 KmqMessage<Order> message = consumer.poll(100);
                 if(null != message) {
-                    System.out.println(message.getBody());
+                    System.out.println(consumer.getId() + " : " + message.getBody());
                 }
             }
             System.out.println("程序退出。");
         }).start();
 
         KmqProducer producer = broker.createProducer();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             Order order = new Order(1000L + i, System.currentTimeMillis(), "USD2CNY", 6.51d);
             producer.send(topic, new KmqMessage(null, order));
         }

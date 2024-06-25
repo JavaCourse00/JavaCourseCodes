@@ -2,6 +2,7 @@ package io.kimmking.kmq.core;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class KmqBroker { // Broker+Connection
 
@@ -21,8 +22,9 @@ public final class KmqBroker { // Broker+Connection
         return new KmqProducer(this);
     }
 
+    final AtomicInteger consumerId = new AtomicInteger(0);
     public KmqConsumer createConsumer() {
-        return new KmqConsumer(this);
+        return new KmqConsumer("CID" + consumerId.getAndIncrement(), this);
     }
 
 }

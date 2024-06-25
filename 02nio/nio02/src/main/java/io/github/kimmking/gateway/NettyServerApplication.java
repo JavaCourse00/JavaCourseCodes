@@ -2,7 +2,10 @@ package io.github.kimmking.gateway;
 
 
 import io.github.kimmking.gateway.inbound.HttpInboundServer;
+import io.netty.util.internal.PlatformDependent;
 
+import java.lang.reflect.Constructor;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 public class NettyServerApplication {
@@ -11,6 +14,13 @@ public class NettyServerApplication {
     public final static String GATEWAY_VERSION = "3.0.0";
     
     public static void main(String[] args) {
+
+//        sun.misc.Unsafe unsafe = sun.misc.Unsafe.getUnsafe();
+//        System.out.println(unsafe.addressSize());
+
+
+        System.out.println("PlatformDependent.hasUnsafe = " + PlatformDependent.javaVersion());
+        System.out.println("PlatformDependent.hasUnsafe = " + PlatformDependent.hasUnsafe());
 
         String proxyPort = System.getProperty("proxyPort","8888");
 

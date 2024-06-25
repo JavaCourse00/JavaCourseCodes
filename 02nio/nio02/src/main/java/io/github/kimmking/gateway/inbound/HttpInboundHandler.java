@@ -39,9 +39,14 @@ public class HttpInboundHandler extends ChannelInboundHandlerAdapter {
 //            if (uri.contains("/test")) {
 //                handlerTest(fullRequest, ctx);
 //            }
-    
-            handler.handle(fullRequest, ctx, filter);
-    
+
+            String uri = fullRequest.getUri();
+            System.out.println("  uri ==>> " + uri);
+            if(uri.contains("/netty/info")) {
+                NettyInfoHandler.INSTANCE.handle(fullRequest, ctx);
+            } else {
+                handler.handle(fullRequest, ctx, filter);
+            }
         } catch(Exception e) {
             e.printStackTrace();
         } finally {

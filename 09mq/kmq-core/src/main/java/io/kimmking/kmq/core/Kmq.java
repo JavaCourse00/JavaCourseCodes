@@ -2,6 +2,8 @@ package io.kimmking.kmq.core;
 
 import lombok.SneakyThrows;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -13,14 +15,28 @@ public final class Kmq {
         this.queue = new LinkedBlockingQueue(capacity);
     }
 
-    private String topic;
+//    public List<KmqConsumer> consumers = new ArrayList<>();
 
-    private int capacity;
+    private List<MessageListener> listeners = new ArrayList<>();
+
+    private final String topic;
+
+    private final int capacity;
 
     private LinkedBlockingQueue<KmqMessage> queue;
 
     public boolean send(KmqMessage message) {
-        return queue.offer(message);
+        boolean offered = queue.offer(message);
+        if(offered) {
+            listeners.forEach(listener -> {
+                try {
+                    listener.onMessage(message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        return offered;
     }
 
     public KmqMessage poll() {
@@ -30,6 +46,10 @@ public final class Kmq {
     @SneakyThrows
     public KmqMessage poll(long timeout) {
         return queue.poll(timeout, TimeUnit.MILLISECONDS);
+    }
+
+    public void addListener(MessageListener listener) {
+        listeners.add(listener);
     }
 
 }
