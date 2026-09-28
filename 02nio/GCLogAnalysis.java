@@ -27,6 +27,7 @@ public class GCLogAnalysis {
             int randomIndex = random.nextInt(2 * cacheSize);
             if (randomIndex < cacheSize) {
                 cachedGarbage[randomIndex] = garbage;
+                cachedGarbage[randomIndex] = garbage;
             }
         }
         System.out.println("执行结束!共生成对象次数:" + counter.longValue());
